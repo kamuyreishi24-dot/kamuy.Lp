@@ -46,15 +46,42 @@
   .owl { width: 56px; height: 56px; margin-bottom: 2.2rem; opacity: 0.9; }
   .eyebrow {
     font-size: 0.72rem; letter-spacing: 0.42em; color: var(--aurora-teal);
-    font-weight: 500; margin-bottom: 2.2rem;
+    font-weight: 500; margin-bottom: 2rem;
+  }
+  .namemark {
+    display: flex; align-items: center; justify-content: center;
+    gap: clamp(0.9rem, 4vw, 1.8rem);
+    margin-top: 0.4rem;
+  }
+  .namemark .rule {
+    flex: 1 1 auto; max-width: 68px; height: 1px;
+    background: linear-gradient(to right, transparent, rgba(201,168,106,0.55));
+  }
+  .namemark .rule:last-child {
+    background: linear-gradient(to left, transparent, rgba(201,168,106,0.55));
   }
   .hero h1 {
     font-family: 'Noto Serif JP', serif; font-weight: 200;
-    font-size: clamp(3.4rem, 22vw, 7rem); letter-spacing: 0.18em; line-height: 1;
-    color: var(--frost); text-shadow: 0 0 60px rgba(139, 127, 209, 0.35);
+    font-size: clamp(3.2rem, 20vw, 6.4rem);
+    letter-spacing: 0.22em; text-indent: 0.22em;
+    line-height: 1.05; white-space: nowrap;
+    background: linear-gradient(175deg, #ffffff 0%, var(--frost) 42%, #a9b2bf 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    filter: drop-shadow(0 0 34px rgba(139,127,209,0.42)) drop-shadow(0 0 90px rgba(79,209,174,0.14));
+    animation: breathe 7s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { filter: drop-shadow(0 0 30px rgba(139,127,209,0.34)) drop-shadow(0 0 80px rgba(79,209,174,0.10)); }
+    50%      { filter: drop-shadow(0 0 46px rgba(139,127,209,0.55)) drop-shadow(0 0 110px rgba(79,209,174,0.20)); }
+  }
+  .romaji {
+    margin-top: 1.5rem; font-family: 'Noto Sans JP', sans-serif; font-weight: 300;
+    font-size: 0.66rem; letter-spacing: 0.62em; text-indent: 0.62em;
+    color: var(--dim);
   }
   .hero-sub {
-    margin-top: 2.4rem; font-family: 'Noto Serif JP', serif; font-weight: 300;
+    margin-top: 2.1rem; font-family: 'Noto Serif JP', serif; font-weight: 300;
     font-size: clamp(0.98rem, 3.8vw, 1.2rem); letter-spacing: 0.06em; color: var(--dim); line-height: 2;
   }
   .scroll-hint {
@@ -68,28 +95,20 @@
   .section-inner { max-width: 720px; margin: 0 auto; }
   .divider { width: 1px; height: 64px; background: linear-gradient(to bottom, transparent, var(--line), transparent); margin: 0 auto; }
 
-  .origin .section-inner { max-width: 30em; }
+  .origin { padding-left: 5vw; padding-right: 5vw; }
+  .origin .section-inner { max-width: 22em; }
   .origin p {
     font-family: 'Noto Serif JP', serif; font-weight: 300;
-    font-size: clamp(0.98rem, 3.6vw, 1.12rem);
+    font-size: min(4.3vw, 1.08rem);
     letter-spacing: 0.01em;
-    line-height: 2.1;
+    line-height: 2.05;
     color: var(--frost);
-    margin-bottom: 1.7rem;
+    margin-bottom: 1.8rem;
     text-align: left;
     line-break: strict;
-    text-wrap: pretty;
-    word-break: auto-phrase;
   }
-  .origin p.dim { color: var(--dim); font-size: clamp(0.9rem, 3.3vw, 1rem); line-height: 2.05; }
-  .origin p.emph {
-    color: var(--gold-thread); font-weight: 500;
-    margin: 2.8rem 0; padding-left: 1.1rem;
-    border-left: 1px solid rgba(201,168,106,0.35);
-    font-size: clamp(1.02rem, 3.8vw, 1.2rem);
-    line-height: 2.05;
-  }
-  .origin .signoff { margin-top: 2.8rem; font-size: 0.76rem; letter-spacing: 0.32em; color: var(--aurora-violet); text-align: right; }
+  .origin p.dim { color: var(--dim); }
+  .origin .signoff { margin-top: 2.6rem; font-size: 0.76rem; letter-spacing: 0.32em; color: var(--aurora-violet); text-align: right; }
 
   .seals-head { text-align: center; margin-bottom: 6vh; }
   .seals-head h2 {
@@ -125,7 +144,7 @@
   .promise-item p { font-size: 0.82rem; color: var(--dim); line-height: 1.75; }
 
   .invite { text-align: center; }
-  .invite h2 { font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: clamp(1.7rem, 3.8vw, 2.3rem); letter-spacing: 0.08em; margin-bottom: 1rem; }
+  .invite h2 { font-family: 'Noto Serif JP', serif; font-weight: 300; white-space: nowrap; font-size: min(6.6vw, 1.9rem); letter-spacing: 0.06em; margin-bottom: 1rem; }
   .invite .lead { color: var(--dim); font-size: 0.95rem; margin-bottom: 3.2rem; }
   form { text-align: left; display: flex; flex-direction: column; gap: 1.7rem; }
   .field { display: flex; flex-direction: column; gap: 0.6rem; }
@@ -167,7 +186,7 @@
     section { padding: 9vh 7vw; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .scroll-hint { animation: none; }
+    .scroll-hint, .hero h1 { animation: none; }
     * { transition: none !important; }
   }
 </style>
@@ -188,7 +207,12 @@
       <path d="M50 22 L42 26" stroke="#4fd1ae" stroke-width="1.2"/>
     </svg>
     <div class="eyebrow">視えてしまう者</div>
-    <h1>神威</h1>
+    <div class="namemark">
+      <span class="rule"></span>
+      <h1>神威</h1>
+      <span class="rule"></span>
+    </div>
+    <div class="romaji">K A M U Y</div>
     <p class="hero-sub">視えたことは、ぜんぶ伝える。</p>
   </div>
   <div class="scroll-hint" aria-hidden="true"></div>
@@ -196,13 +220,13 @@
 
 <section class="origin">
   <div class="section-inner">
-    <p>小さい頃から、人の奥が視えることがあった。</p>
-    <p>最初は、ただ恐ろしかった。視えたものを、どう扱えばいいのか分からなかったから。</p>
-    <p>それでも、視えたことをなかったことにするのは、やめた。</p>
-    <p>宿曜と四柱推命を学び、九星で運気の波を読み、霊視と重ねて視るようになった。</p>
-    <p class="emph">魂の柱。縁の糸。運気の扉。<br>どこで止まり、どの縁がほどけかけているのか。</p>
+    <p>小さい頃から<br>人の奥が視えることがあった。</p>
+    <p>最初は、ただ恐ろしかった。視えたものを、<br>どう扱えばいいのか分からなかったから。</p>
+    <p>それでも、視えたことをなかった<br>ことにするのは、やめた。</p>
+    <p>宿曜と四柱推命を学び、九星で運気の<br>波を読み、霊視と重ねて視るようになった。</p>
+    <p>魂の柱。縁の糸。運気の扉。どこで止まり、<br>どの縁がほどけかけているのか。</p>
     <p>視えたことは、ぜんぶ伝える。</p>
-    <p>当たるかどうかを決めるのは、これからのあなた自身。</p>
+    <p>当たるかどうかを決めるのは、<br>これからのあなた自身。</p>
     <p class="dim">深夜の森を見渡す梟のように。<br>気づけば、そう呼ばれるようになった。</p>
     <div class="signoff">神威</div>
   </div>
@@ -247,10 +271,6 @@
   </div>
 </section>
 
-<section class="creed">
-  <blockquote>視えたことは、ぜんぶ伝える。<br>当たるかどうかを決めるのは、<br>これからのあなた自身。</blockquote>
-  <div class="attribution en">— KAMUY</div>
-</section>
 
 
 <section class="invite" id="invite">
