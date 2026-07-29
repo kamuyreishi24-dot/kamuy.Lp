@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神威 | 視えてしまう者</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;500;700&family=Noto+Sans+JP:wght@300;400;500&family=Cormorant+Garamond:ital@1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #0a0e14;
+    --void-deep: #050709;
+    --aurora-teal: #4fd1ae;
+    --aurora-violet: #8b7fd1;
+    --frost: #e8ecf1;
+    --dim: #7a8290;
+    --gold-thread: #c9a86a;
+    --line: rgba(232, 236, 241, 0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--void);
+    color: var(--frost);
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 300;
+    line-height: 2.0;
+    letter-spacing: 0.015em;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--aurora-violet); color: var(--void); }
+  .en { font-family: 'Cormorant Garamond', serif; font-style: italic; }
+
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 6vh 6vw; overflow: hidden;
+  }
+  .hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.85; }
+  .hero::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 30%, transparent 0%, var(--void) 78%);
+    z-index: 1; pointer-events: none;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .owl { width: 56px; height: 56px; margin-bottom: 2.2rem; opacity: 0.9; }
+  .eyebrow {
+    font-size: 0.72rem; letter-spacing: 0.42em; color: var(--aurora-teal);
+    font-weight: 500; margin-bottom: 2.2rem;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif JP', serif; font-weight: 200;
+    font-size: clamp(3.4rem, 22vw, 7rem); letter-spacing: 0.18em; line-height: 1;
+    color: var(--frost); text-shadow: 0 0 60px rgba(139, 127, 209, 0.35);
+  }
+  .hero-sub {
+    margin-top: 2.4rem; font-family: 'Noto Serif JP', serif; font-weight: 300;
+    font-size: clamp(0.98rem, 3.8vw, 1.2rem); letter-spacing: 0.06em; color: var(--dim); line-height: 2;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%); z-index: 2;
+    width: 1px; height: 46px; background: linear-gradient(to bottom, transparent, var(--dim));
+    animation: hint-fade 2.6s ease-in-out infinite;
+  }
+  @keyframes hint-fade { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.7; } }
+
+  section { padding: 11vh 8vw; position: relative; }
+  .section-inner { max-width: 720px; margin: 0 auto; }
+  .divider { width: 1px; height: 64px; background: linear-gradient(to bottom, transparent, var(--line), transparent); margin: 0 auto; }
+
+  .origin .section-inner { max-width: 30em; }
+  .origin p {
+    font-family: 'Noto Serif JP', serif; font-weight: 300;
+    font-size: clamp(0.98rem, 3.6vw, 1.12rem);
+    letter-spacing: 0.01em;
+    line-height: 2.1;
+    color: var(--frost);
+    margin-bottom: 1.7rem;
+    text-align: left;
+    line-break: strict;
+    text-wrap: pretty;
+    word-break: auto-phrase;
+  }
+  .origin p.dim { color: var(--dim); font-size: clamp(0.9rem, 3.3vw, 1rem); line-height: 2.05; }
+  .origin p.emph {
+    color: var(--gold-thread); font-weight: 500;
+    margin: 2.8rem 0; padding-left: 1.1rem;
+    border-left: 1px solid rgba(201,168,106,0.35);
+    font-size: clamp(1.02rem, 3.8vw, 1.2rem);
+    line-height: 2.05;
+  }
+  .origin .signoff { margin-top: 2.8rem; font-size: 0.76rem; letter-spacing: 0.32em; color: var(--aurora-violet); text-align: right; }
+
+  .seals-head { text-align: center; margin-bottom: 6vh; }
+  .seals-head h2 {
+    font-family: 'Noto Serif JP', serif; font-weight: 300;
+    font-size: clamp(1.8rem, 4vw, 2.5rem); letter-spacing: 0.1em; margin-top: 0.6rem;
+  }
+  .seal-list { max-width: 780px; margin: 0 auto; }
+  .seal {
+    display: grid; grid-template-columns: 80px 1fr; gap: 2rem;
+    padding: 2.8rem 0; border-top: 1px solid var(--line);
+  }
+  .seal:last-child { border-bottom: 1px solid var(--line); }
+  .seal .num { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 2.4rem; color: var(--aurora-teal); opacity: 0.75; line-height: 1; }
+  .seal h3 { font-family: 'Noto Serif JP', serif; font-weight: 500; font-size: clamp(1rem, 3.9vw, 1.22rem); margin-bottom: 0.7rem; line-height: 1.7; }
+  .seal h3 .sub { display: block; font-family: 'Noto Sans JP', sans-serif; font-weight: 400; font-size: 0.76rem; letter-spacing: 0.16em; color: var(--dim); margin-top: 0.35rem; }
+  .seal p.desc { color: var(--dim); font-size: clamp(0.88rem, 3.3vw, 0.95rem); max-width: 32em; line-height: 2.05; line-break: strict; text-wrap: balance; word-break: auto-phrase; }
+
+  .creed { text-align: center; background: linear-gradient(180deg, transparent, rgba(139,127,209,0.06), transparent); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .creed blockquote {
+    font-family: 'Noto Serif JP', serif; font-weight: 300;
+    font-size: clamp(1.12rem, 4.4vw, 1.55rem);
+    max-width: 18em; margin: 0 auto;
+    line-height: 2.1; letter-spacing: 0.04em;
+    line-break: strict; text-wrap: balance; word-break: auto-phrase;
+  }
+  .creed .attribution { margin-top: 1.8rem; font-size: 0.78rem; letter-spacing: 0.3em; color: var(--aurora-teal); }
+
+  .promise .section-inner { max-width: 760px; }
+  .promise-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background: var(--line); border: 1px solid var(--line); }
+  .promise-item { background: var(--void); padding: 2.4rem 1.5rem; text-align: center; }
+  .promise-item .mark { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; color: var(--gold-thread); display: block; margin-bottom: 0.9rem; }
+  .promise-item h3 { font-family: 'Noto Serif JP', serif; font-weight: 500; font-size: 1rem; letter-spacing: 0.06em; margin-bottom: 0.7rem; }
+  .promise-item p { font-size: 0.82rem; color: var(--dim); line-height: 1.75; }
+
+  .invite { text-align: center; }
+  .invite h2 { font-family: 'Noto Serif JP', serif; font-weight: 300; font-size: clamp(1.7rem, 3.8vw, 2.3rem); letter-spacing: 0.08em; margin-bottom: 1rem; }
+  .invite .lead { color: var(--dim); font-size: 0.95rem; margin-bottom: 3.2rem; }
+  form { text-align: left; display: flex; flex-direction: column; gap: 1.7rem; }
+  .field { display: flex; flex-direction: column; gap: 0.6rem; }
+  .field label { font-size: 0.76rem; letter-spacing: 0.16em; color: var(--aurora-teal); font-weight: 500; }
+  .field .hint { font-size: 0.74rem; color: var(--dim); margin-top: -0.2rem; }
+  input, select, textarea {
+    background: transparent; border: none; border-bottom: 1px solid var(--line);
+    color: var(--frost); font-family: 'Noto Sans JP', sans-serif; font-size: 1rem;
+    padding: 0.7rem 0.2rem; transition: border-color 0.4s ease; appearance: none; border-radius: 0;
+  }
+  textarea { resize: vertical; min-height: 90px; border: 1px solid var(--line); padding: 0.8rem; }
+  select option { background: var(--void-deep); color: var(--frost); }
+  input::placeholder, textarea::placeholder { color: var(--dim); opacity: 0.6; }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--aurora-teal); }
+  .submit-row { margin-top: 1.4rem; display: flex; flex-direction: column; align-items: center; gap: 1.3rem; }
+  .submit-btn {
+    width: 100%; padding: 1.1rem; border: 1px solid var(--gold-thread); background: transparent;
+    color: var(--gold-thread); font-family: 'Noto Serif JP', serif; font-size: 1rem;
+    letter-spacing: 0.28em; cursor: pointer; transition: color 0.5s ease, background 0.5s ease;
+  }
+  .submit-btn:hover, .submit-btn:focus-visible { color: var(--void); background: var(--gold-thread); }
+  .submit-btn:focus-visible { outline: 2px solid var(--aurora-teal); outline-offset: 4px; }
+  .privacy-note { font-size: 0.74rem; color: var(--dim); text-align: center; line-height: 1.7; }
+  .confirm { display: none; text-align: center; padding: 2.2rem 1rem; }
+  .confirm.show { display: block; }
+  .confirm p { font-family: 'Noto Serif JP', serif; font-size: 1.2rem; letter-spacing: 0.08em; color: var(--aurora-teal); }
+  .confirm p.small { margin-top: 0.9rem; font-family: 'Noto Sans JP', sans-serif; font-size: 0.83rem; color: var(--dim); }
+  form.hide { display: none; }
+
+  footer { text-align: center; padding: 5rem 6vw 4rem; border-top: 1px solid var(--line); }
+  footer .sigil { font-family: 'Noto Serif JP', serif; font-size: 1.3rem; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 1rem; }
+  footer .handle { font-size: 0.8rem; letter-spacing: 0.06em; color: var(--dim); }
+  footer .handle a { color: var(--aurora-teal); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.3s ease; }
+  footer .handle a:hover { border-color: var(--aurora-teal); }
+
+  @media (max-width: 640px) {
+    .promise-grid { grid-template-columns: 1fr; }
+    .seal { grid-template-columns: 1fr; gap: 0.5rem; }
+    section { padding: 9vh 7vw; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-hint { animation: none; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <canvas id="threads" aria-hidden="true"></canvas>
+  <div class="hero-content">
+    <svg class="owl" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="32" cy="38" rx="18" ry="20" fill="#0a0e14" stroke="#4fd1ae" stroke-width="1.2"/>
+      <circle cx="24" cy="30" r="7" fill="#050709" stroke="#c9a86a" stroke-width="1"/>
+      <circle cx="40" cy="30" r="7" fill="#050709" stroke="#c9a86a" stroke-width="1"/>
+      <circle cx="24" cy="30" r="2.4" fill="#c9a86a"/>
+      <circle cx="40" cy="30" r="2.4" fill="#c9a86a"/>
+      <path d="M32 34 L29 40 L35 40 Z" fill="#c9a86a"/>
+      <path d="M14 22 L22 26" stroke="#4fd1ae" stroke-width="1.2"/>
+      <path d="M50 22 L42 26" stroke="#4fd1ae" stroke-width="1.2"/>
+    </svg>
+    <div class="eyebrow">視えてしまう者</div>
+    <h1>神威</h1>
+    <p class="hero-sub">視えたことは、ぜんぶ伝える。</p>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"></div>
+</section>
+
+<section class="origin">
+  <div class="section-inner">
+    <p>小さい頃から、人の奥が視えることがあった。</p>
+    <p>最初は、ただ恐ろしかった。視えたものを、どう扱えばいいのか分からなかったから。</p>
+    <p>それでも、視えたことをなかったことにするのは、やめた。</p>
+    <p>宿曜と四柱推命を学び、九星で運気の波を読み、霊視と重ねて視るようになった。</p>
+    <p class="emph">魂の柱。縁の糸。運気の扉。<br>どこで止まり、どの縁がほどけかけているのか。</p>
+    <p>視えたことは、ぜんぶ伝える。</p>
+    <p>当たるかどうかを決めるのは、これからのあなた自身。</p>
+    <p class="dim">深夜の森を見渡す梟のように。<br>気づけば、そう呼ばれるようになった。</p>
+    <div class="signoff">神威</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="seals">
+  <div class="seals-head">
+    <div class="eyebrow en">THE FOUR SEALS</div>
+    <h2>四つの結界</h2>
+  </div>
+  <div class="seal-list">
+    <div class="seal">
+      <span class="num en">01</span>
+      <div>
+        <h3>魂の柱を視る<span class="sub">四柱推命 — 生まれ持った本質</span></h3>
+        <p class="desc">生年月日時から導く、変わらない核。あなたが持って生まれたエネルギーの色を視る。</p>
+      </div>
+    </div>
+    <div class="seal">
+      <span class="num en">02</span>
+      <div>
+        <h3>縁の糸を辿る<span class="sub">宿曜 — 動いている関係</span></h3>
+        <p class="desc">今、あなたの周りで結ばれ、あるいはほどけかけている縁のかたちを辿る。</p>
+      </div>
+    </div>
+    <div class="seal">
+      <span class="num en">03</span>
+      <div>
+        <h3>運気の扉を開く<span class="sub">九星気学 — 今のフェーズ</span></h3>
+        <p class="desc">今という時間が、大きな運の流れのどこに位置しているのかを視る。</p>
+      </div>
+    </div>
+    <div class="seal">
+      <span class="num en">04</span>
+      <div>
+        <h3>まだ言葉にできていないものを視る<span class="sub">霊視 — 神威だけが視られるもの</span></h3>
+        <p class="desc">数字や理論だけでは辿り着けない、あなた自身もまだ言葉にできていない部分を視る。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="creed">
+  <blockquote>視えたことは、ぜんぶ伝える。<br>当たるかどうかを決めるのは、<br>これからのあなた自身。</blockquote>
+  <div class="attribution en">— KAMUY</div>
+</section>
+
+
+<section class="invite" id="invite">
+  <div class="section-inner">
+    <div class="eyebrow en">CONSULTATION</div>
+    <h2>あなたの悩みを、聞かせて</h2>
+    <p class="lead">誰よりも丁寧に、あなただけの言葉で視ます。</p>
+
+    <form id="inviteForm">
+      <div class="field">
+        <label for="name">お名前・呼び名</label>
+        <input type="text" id="name" name="name" required placeholder="呼ばれたい名前">
+      </div>
+
+      <div class="field">
+        <label for="birthday">生年月日</label>
+        <input type="date" id="birthday" name="birthday" required>
+        <span class="hint">魂の柱・縁の糸を視るために使います</span>
+      </div>
+
+      <div class="field">
+        <label for="topic">知りたいこと</label>
+        <select id="topic" name="topic" required>
+          <option value="" disabled selected>選んでください</option>
+          <option value="恋愛・縁">恋愛・縁</option>
+          <option value="仕事・進路">仕事・進路</option>
+          <option value="人間関係">人間関係</option>
+          <option value="人生全般">人生全般</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="worry">今、一番揺れていること</label>
+        <textarea id="worry" name="worry" placeholder="まだ言葉にできていないことでも構いません。"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="contact">連絡先</label>
+        <input type="text" id="contact" name="contact" required placeholder="メールアドレス、またはThreads/InstagramのID">
+        <span class="hint">視た内容を、こちらへ届けます</span>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn">視てもらう</button>
+        <p class="privacy-note">LINEへの登録は求めません。記された情報は鑑定のためだけに使います。</p>
+      </div>
+    </form>
+
+    <div class="confirm" id="confirmMsg">
+      <p>受け取りました。</p>
+      <p class="small">追って、視えたことをそのままお伝えします。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="sigil">神威</div>
+  <div class="handle">Threads&nbsp;<a href="https://www.threads.com/@kamuy_reishi" target="_blank" rel="noopener">@kamuy_reishi</a></div>
+</footer>
+
+<script>
+  const canvas = document.getElementById('threads');
+  const ctx = canvas.getContext('2d');
+  let w, h, threads = [];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function resize() {
+    w = canvas.width = canvas.offsetWidth * devicePixelRatio;
+    h = canvas.height = canvas.offsetHeight * devicePixelRatio;
+  }
+
+  function initThreads() {
+    threads = [];
+    const count = Math.max(5, Math.floor(w / 260));
+    for (let i = 0; i < count; i++) {
+      const points = [];
+      const segCount = 6;
+      const baseY = (h / (count + 1)) * (i + 1) + (Math.random() - 0.5) * h * 0.08;
+      for (let s = 0; s <= segCount; s++) {
+        points.push({ x: (w / segCount) * s, baseY: baseY, phase: Math.random() * Math.PI * 2, amp: 20 + Math.random() * 50 });
+      }
+      threads.push({ points, hueMix: Math.random(), speed: 0.0006 + Math.random() * 0.0006, width: 0.6 + Math.random() * 1.1, alpha: 0.10 + Math.random() * 0.18 });
+    }
+  }
+
+  function colorFor(mix, alpha) {
+    const r = Math.round(79 + (139 - 79) * mix);
+    const g = Math.round(209 + (127 - 209) * mix);
+    const b = Math.round(174 + (209 - 174) * mix);
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+  }
+
+  let t = 0;
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    threads.forEach(function (thread) {
+      ctx.beginPath();
+      thread.points.forEach(function (p, idx) {
+        const y = p.baseY + Math.sin(t * thread.speed * 1000 + p.phase) * p.amp;
+        if (idx === 0) ctx.moveTo(p.x, y);
+        else {
+          const prev = thread.points[idx - 1];
+          const prevY = prev.baseY + Math.sin(t * thread.speed * 1000 + prev.phase) * prev.amp;
+          const cx = (prev.x + p.x) / 2;
+          const cy = (prevY + y) / 2;
+          ctx.quadraticCurveTo(prev.x, prevY, cx, cy);
+        }
+      });
+      ctx.strokeStyle = colorFor(thread.hueMix, thread.alpha);
+      ctx.lineWidth = thread.width * devicePixelRatio;
+      ctx.stroke();
+    });
+    t += 16;
+    if (!reduceMotion) requestAnimationFrame(draw);
+  }
+
+  function setup() { resize(); initThreads(); draw(); }
+  window.addEventListener('resize', function () { resize(); initThreads(); });
+  setup();
+
+  const form = document.getElementById('inviteForm');
+  const confirmMsg = document.getElementById('confirmMsg');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    form.classList.add('hide');
+    confirmMsg.classList.add('show');
+  });
+</script>
+
+</body>
+</html>
