@@ -168,6 +168,10 @@
   .submit-btn:hover, .submit-btn:focus-visible { color: var(--void); background: var(--gold-thread); }
   .submit-btn:focus-visible { outline: 2px solid var(--aurora-teal); outline-offset: 4px; }
   .privacy-note { font-size: 0.74rem; color: var(--dim); text-align: center; line-height: 1.7; }
+  .botcheck { display: none !important; }
+  .submit-btn:disabled { opacity: 0.5; cursor: default; }
+  .error-note { margin-top: 1.2rem; font-size: 0.8rem; color: var(--gold-thread); line-height: 1.8; display: none; }
+  .error-note.show { display: block; }
   .confirm { display: none; text-align: center; padding: 2.2rem 1rem; }
   .confirm.show { display: block; }
   .confirm p { font-family: 'Noto Serif JP', serif; font-size: 1.2rem; letter-spacing: 0.08em; color: var(--aurora-teal); }
@@ -280,6 +284,11 @@
     <p class="lead">誰よりも丁寧に、あなただけの言葉で視ます。</p>
 
     <form id="inviteForm">
+      <input type="hidden" name="access_key" value="9ae6927f-210e-4137-b69f-89d92c72f95a">
+      <input type="hidden" name="subject" value="神威 — 鑑定の依頼が届きました">
+      <input type="hidden" name="from_name" value="神威 LP">
+      <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" aria-hidden="true">
+
       <div class="field">
         <label for="name">お名前・呼び名</label>
         <input type="text" id="name" name="name" required placeholder="呼ばれたい名前">
@@ -316,6 +325,7 @@
       <div class="submit-row">
         <button type="submit" class="submit-btn">視てもらう</button>
         <p class="privacy-note">LINEへの登録は求めません。記された情報は鑑定のためだけに使います。</p>
+        <p class="error-note" id="errorNote">うまく届きませんでした。少し時間をおいて、もう一度お試しください。</p>
       </div>
     </form>
 
@@ -393,10 +403,34 @@
 
   const form = document.getElementById('inviteForm');
   const confirmMsg = document.getElementById('confirmMsg');
-  form.addEventListener('submit', function (e) {
+  const errorNote = document.getElementById('errorNote');
+  const submitBtn = form.querySelector('.submit-btn');
+
+  form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    form.classList.add('hide');
-    confirmMsg.classList.add('show');
+    errorNote.classList.remove('show');
+    submitBtn.disabled = true;
+    submitBtn.textContent = '視ています…';
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      const data = await res.json();
+      if (data.success) {
+        form.classList.add('hide');
+        confirmMsg.classList.add('show');
+      } else {
+        throw new Error(data.message || 'failed');
+      }
+    } catch (err) {
+      console.error(err);
+      errorNote.classList.add('show');
+      submitBtn.disabled = false;
+      submitBtn.textContent = '視てもらう';
+    }
   });
 </script>
 
