@@ -167,6 +167,11 @@
   }
   .submit-btn:hover, .submit-btn:focus-visible { color: var(--void); background: var(--gold-thread); }
   .submit-btn:focus-visible { outline: 2px solid var(--aurora-teal); outline-offset: 4px; }
+  .follow-note {
+    font-family: 'Noto Serif JP', serif; font-weight: 300;
+    font-size: min(3.8vw, 0.98rem); line-height: 2.05; letter-spacing: 0.03em;
+    color: var(--gold-thread); text-align: center; margin-top: 0.2rem;
+  }
   .privacy-note { font-size: 0.74rem; color: var(--dim); text-align: center; line-height: 1.7; }
   .botcheck { display: none !important; }
   .submit-btn:disabled { opacity: 0.5; cursor: default; }
@@ -317,13 +322,24 @@
       </div>
 
       <div class="field">
-        <label for="contact">連絡先</label>
-        <input type="text" id="contact" name="contact" required placeholder="メールアドレス、またはThreads/InstagramのID">
+        <label for="contact_method">お届け先</label>
+        <select id="contact_method" name="contact_method" required>
+          <option value="" disabled selected>選んでください</option>
+          <option value="メール">メール</option>
+          <option value="Instagram">Instagram</option>
+          <option value="Threads">Threads</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="contact" id="contactLabel">メールアドレス</label>
+        <input type="text" id="contact" name="contact" required placeholder="選んだ届け先の宛先">
         <span class="hint">視た内容を、こちらへ届けます</span>
       </div>
 
       <div class="submit-row">
         <button type="submit" class="submit-btn">視てもらう</button>
+        <p class="follow-note">フォローしてくださった方から、<br>順に視ていきます。</p>
         <p class="privacy-note">LINEへの登録は求めません。記された情報は鑑定のためだけに使います。</p>
         <p class="error-note" id="errorNote">うまく届きませんでした。少し時間をおいて、もう一度お試しください。</p>
       </div>
@@ -400,6 +416,22 @@
   function setup() { resize(); initThreads(); draw(); }
   window.addEventListener('resize', function () { resize(); initThreads(); });
   setup();
+
+  const methodSel = document.getElementById('contact_method');
+  const contactInput = document.getElementById('contact');
+  const contactLabel = document.getElementById('contactLabel');
+  const CONTACT_MAP = {
+    'メール':      ['メールアドレス',      'example@mail.com'],
+    'Instagram':   ['InstagramのID',      '@your_id'],
+    'Threads':     ['ThreadsのID',        '@your_id']
+  };
+  methodSel.addEventListener('change', function () {
+    const m = CONTACT_MAP[methodSel.value];
+    if (!m) return;
+    contactLabel.textContent = m[0];
+    contactInput.placeholder = m[1];
+    contactInput.type = (methodSel.value === 'メール') ? 'email' : 'text';
+  });
 
   const form = document.getElementById('inviteForm');
   const confirmMsg = document.getElementById('confirmMsg');
