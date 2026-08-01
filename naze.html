@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>なぜ、何度占っても楽にならなかったのか | 神威</title>
+<meta name="description" content="占いには、二つの層があります。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;500&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --void: #0a0e14;
+    --teal: #4fd1ae;
+    --violet: #8b7fd1;
+    --frost: #e8ecf1;
+    --dim: #7a8290;
+    --gold: #c9a86a;
+    --line: rgba(232, 236, 241, 0.12);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--void); color: var(--frost);
+    font-family: 'Noto Serif JP', serif; font-weight: 300;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--violet); color: var(--void); }
+
+  .head { position: relative; padding: 14vh 7vw 8vh; text-align: center; overflow: hidden; }
+  .head::before {
+    content: ""; position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 75% 50% at 50% 28%, rgba(139,127,209,0.17), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 50% 62%, rgba(79,209,174,0.10), transparent 70%);
+  }
+  .head > * { position: relative; z-index: 1; }
+  .owl { width: 40px; height: 40px; margin-bottom: 2rem; opacity: 0.9; }
+  .eyebrow {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 0.62rem;
+    letter-spacing: 0.38em; color: var(--teal); font-weight: 500; margin-bottom: 1.8rem;
+  }
+  h1 {
+    font-weight: 300; font-size: min(5.6vw, 1.6rem);
+    line-height: 1.95; letter-spacing: 0.03em; max-width: 15em; margin: 0 auto;
+  }
+  .byline {
+    font-family: 'Noto Sans JP', sans-serif; margin-top: 2.2rem;
+    font-size: 0.68rem; letter-spacing: 0.3em; color: var(--dim);
+  }
+
+  main { padding: 0 5vw 4vh; }
+  .inner { max-width: 24em; margin: 0 auto; }
+
+  h2 {
+    font-weight: 500; font-size: min(4.3vw, 1.08rem);
+    line-height: 1.85; letter-spacing: 0.02em;
+    margin: 5rem 0 2rem; padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--line);
+  }
+  h2:first-of-type { margin-top: 2.2rem; }
+  h2 .num {
+    display: block; font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.58rem; letter-spacing: 0.38em;
+    color: var(--gold); font-weight: 400; margin-bottom: 0.8rem;
+  }
+
+  p {
+    font-size: min(3.7vw, 0.97rem);
+    line-height: 2.05; letter-spacing: 0.005em;
+    margin-bottom: 1.7rem;
+    line-break: strict; text-wrap: pretty;
+  }
+  p.dim { color: var(--dim); }
+  p.creed {
+    color: var(--gold); font-weight: 500;
+    font-size: min(3.6vw, 0.95rem);
+    padding-left: 1.05rem; margin: 2.5rem 0;
+    border-left: 1px solid rgba(201,168,106,0.38);
+    line-height: 2.0;
+  }
+
+  .rule-mid {
+    width: 1px; height: 48px; margin: 3rem auto;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,106,0.4), transparent);
+  }
+
+  .offer {
+    margin: 4.5rem 0 0; padding: 2.4rem 1.6rem 2.2rem;
+    border: 1px solid rgba(201,168,106,0.32);
+    background: linear-gradient(180deg, rgba(139,127,209,0.07), rgba(10,14,20,0));
+  }
+  .offer .tag {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 0.58rem;
+    letter-spacing: 0.3em; color: var(--teal);
+    text-align: center; display: block; margin-bottom: 1.7rem;
+  }
+  .offer h3 {
+    font-weight: 500; font-size: min(5.6vw, 1.42rem);
+    text-align: center; letter-spacing: 0.14em; margin-bottom: 0.35rem;
+  }
+  .offer .yomi {
+    font-family: 'Noto Sans JP', sans-serif; text-align: center;
+    font-size: 0.62rem; letter-spacing: 0.24em;
+    color: var(--dim); margin-bottom: 1.7rem;
+  }
+  .offer .was {
+    text-align: center; font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.76rem; color: var(--dim);
+    text-decoration: line-through; margin-bottom: 0.3rem;
+  }
+  .offer .price {
+    text-align: center; color: var(--gold);
+    font-size: min(6.4vw, 1.6rem); letter-spacing: 0.05em; margin-bottom: 0.5rem;
+  }
+  .offer .limit {
+    text-align: center; font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.72rem; letter-spacing: 0.14em;
+    color: var(--teal); margin-bottom: 1.9rem;
+  }
+  .offer ul {
+    list-style: none; margin: 0 0 1.8rem;
+    font-size: min(3.7vw, 0.95rem); line-height: 2.05;
+  }
+  .offer ul li { padding-left: 1.1em; text-indent: -1.1em; margin-bottom: 0.45rem; }
+  .offer ul li::before { content: "・"; color: var(--gold); }
+  .offer .note {
+    font-family: 'Noto Sans JP', sans-serif; font-size: 0.74rem;
+    line-height: 1.95; color: var(--dim); margin-bottom: 0;
+  }
+
+  .close { margin-top: 4.5rem; padding-top: 3rem; border-top: 1px solid var(--line); text-align: center; }
+  .close .sigil { font-size: 1.05rem; letter-spacing: 0.3em; color: var(--dim); margin-bottom: 2.2rem; }
+  .btn {
+    display: inline-block; padding: 1rem 2.2rem;
+    border: 1px solid var(--gold); color: var(--gold);
+    text-decoration: none; font-size: 0.92rem; letter-spacing: 0.18em;
+    transition: color .4s ease, background .4s ease;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--gold); color: var(--void); }
+  .btn:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  .sub-link {
+    display: block; margin-top: 1.8rem; font-family: 'Noto Sans JP', sans-serif;
+    font-size: 0.74rem; letter-spacing: 0.06em; color: var(--dim); text-decoration: none;
+  }
+  .sub-link:hover { color: var(--teal); }
+
+  footer {
+    font-family: 'Noto Sans JP', sans-serif; text-align: center;
+    padding: 4rem 6vw 3.5rem; font-size: 0.66rem;
+    letter-spacing: 0.26em; color: var(--dim);
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<section class="head">
+  <svg class="owl" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <ellipse cx="32" cy="38" rx="18" ry="20" fill="#0a0e14" stroke="#4fd1ae" stroke-width="1.2"/>
+    <circle cx="24" cy="30" r="7" fill="#050709" stroke="#c9a86a" stroke-width="1"/>
+    <circle cx="40" cy="30" r="7" fill="#050709" stroke="#c9a86a" stroke-width="1"/>
+    <circle cx="24" cy="30" r="2.4" fill="#c9a86a"/>
+    <circle cx="40" cy="30" r="2.4" fill="#c9a86a"/>
+    <path d="M32 34 L29 40 L35 40 Z" fill="#c9a86a"/>
+    <path d="M14 22 L22 26" stroke="#4fd1ae" stroke-width="1.2"/>
+    <path d="M50 22 L42 26" stroke="#4fd1ae" stroke-width="1.2"/>
+  </svg>
+  <div class="eyebrow">順番をお待ちの方へ</div>
+  <h1>なぜ、何度占っても<br>楽にならなかったのか</h1>
+  <div class="byline">神威</div>
+</section>
+
+<main>
+  <div class="inner">
+
+    <p>占いを受けたことは、<br>一度ではないと思います。</p>
+
+    <p>当たっていたことも<br>あったはずです。</p>
+
+    <p>それでも、状況は<br>変わらなかった。</p>
+
+    <p>あなたが占いを選ぶのが<br>下手だからではありません。</p>
+
+    <p>買っていたものが、<br>最初から違っていたのです。</p>
+
+    <h2><span class="num">一</span>占いには、二つの層があります</h2>
+
+    <p>ひとつめは、固定層。<br>生まれた瞬間に決まり、<br>一生変わらないものです。</p>
+
+    <p class="dim">性質。強みと弱み。<br>人との相性の型。</p>
+
+    <p>性格を言い当てる。<br>本質を教える。<br>相性を出す。<br>ぜんぶ、固定層です。</p>
+
+    <p>ふたつめは、変動層。<br>毎月切り替わるものです。</p>
+
+    <p>九星の盤は、<br>節入りの日に位置を変えます。</p>
+
+    <p>四柱推命の運は、<br>十年ごとに継ぎ目が来ます。</p>
+
+    <p class="creed">固定層が答えるのは、<br>「あなたはどういう人か」。<br><br>変動層が答えるのは、<br>「いま、どうすればいいか」。</p>
+
+    <p>まったく別のものです。</p>
+
+    <h2><span class="num">二</span>なぜ、変動層を扱う人が少ないのか</h2>
+
+    <p>少し、生々しい話をします。</p>
+
+    <p>固定層は、一度出せば<br>一生使えます。</p>
+
+    <p>去年の命式は、<br>十年後もそのままです。</p>
+
+    <p class="dim">だから自動化できます。<br>生年月日を入れれば出る。<br>何万人にでも配れます。<br>無料でも配れます。</p>
+
+    <p>変動層は、そうはいきません。</p>
+
+    <p>毎月、盤を組み直します。</p>
+
+    <p>十年ごとの継ぎ目は、<br>一人ずつ計算します。</p>
+
+    <p class="dim">自動化できません。<br>量産もできません。</p>
+
+    <p>安い占いに固定層が多いのは、<br>算数の話です。</p>
+
+    <p>あなたが無料や数百円で<br>受けてきたものは、<br>たいてい固定層でした。</p>
+
+    <p>当たっていたのに、<br>変わらなかった。</p>
+
+    <p>当然のことです。</p>
+
+    <h2><span class="num">三</span>悩みは、性格からは生まれません</h2>
+
+    <p>いま抱えている悩みを、<br>思い出してください。</p>
+
+    <p>その悩みは、<br>性格が原因でしょうか。</p>
+
+    <p>たぶん、違います。</p>
+
+    <p class="creed">動くべきときに、待った。<br>待つべきときに、動いた。<br>言うべきときに、黙った。<br>黙るべきときに、言った。</p>
+
+    <p>悩みは、ほとんど<br>タイミングから生まれます。</p>
+
+    <p>性格は、十年前も同じでした。</p>
+
+    <p>それでも十年前、<br>この悩みはなかったはずです。</p>
+
+    <p>変わったのは、<br>あなたではありません。</p>
+
+    <p>時期です。</p>
+
+    <p>そして時期は、<br>固定層に書かれていません。</p>
+
+    <div class="rule-mid"></div>
+
+    <h2><span class="num">四</span>暦と、霊視</h2>
+
+    <p>四柱推命、宿曜、九星気学。<br>この三つは暦です。</p>
+
+    <p>同じ生年月日なら、<br>誰が引いても<br>同じ数字が出ます。</p>
+
+    <p>正しく引けば、<br>私でなくても出せます。</p>
+
+    <p>けれど、暦だけでは<br>足りません。</p>
+
+    <p>暦は、位置を教えます。<br>どこに立っているか。<br>いつ扉が開くか。</p>
+
+    <p class="dim">暦が教えないものがあります。<br>あなたが今夜、<br>何を飲み込んだか。<br>言おうとしてやめた言葉が、<br>いくつ残っているか。</p>
+
+    <p>そこは、視るしかありません。</p>
+
+    <p>私は四つめに、<br>霊視を置いています。</p>
+
+    <p>三つの暦を引いたあと、<br>もう一度その人を視ます。</p>
+
+    <p class="creed">暦だけなら、<br>誰でも再現できる。<br><br>霊視だけなら、<br>誰も検証できない。<br><br>重ねているから、<br>唯一になる。</p>
+
+    <p>暦は、<br>私が嘘をつけない部分です。<br>あなたが自分で<br>確かめられます。</p>
+
+    <p>霊視は、<br>私しか出せない部分です。<br>確かめられるのは、<br>あなたの実感だけ。</p>
+
+    <p>検証できるものと、<br>私しか出せないもの。</p>
+
+    <p>この二つを同じ一枚に<br>重ねている者を、<br>私は他に知りません。</p>
+
+    <div class="rule-mid"></div>
+
+    <h2><span class="num">五</span>ご縁のある方へ</h2>
+
+    <p>私は普段、<br>表に出ていません。</p>
+
+    <p>視ているのは、<br>招かれた場だけです。</p>
+
+    <p>いま無料鑑定を<br>お受けしているのは、<br>別の世界を知り、<br>占い師として<br>箔を付けようとしたからです。</p>
+
+    <p>そして四百人から<br>依頼を受けました。</p>
+
+    <p>正直、<br>想像していませんでした。</p>
+
+    <p>いつまで続けられるかは、<br>約束できません。</p>
+
+    <p class="dim">元の場に戻るかもしれません。<br>いま頂いた依頼を<br>お返しし終えたら、<br>そこで閉じるかもしれません。<br>決めていません。</p>
+
+    <p>そのうえで、<br>ひとつだけ置いておきます。</p>
+
+    <p>特別な本鑑定のご案内です。</p>
+
+    <p>そして、これは<br>このページを最後まで<br>読まれた方だけの案内です。</p>
+
+    <div class="offer">
+      <span class="tag">このページからのみ</span>
+      <h3>神威暦</h3>
+      <div class="yomi">かむいごよみ</div>
+      <div class="was">通常 100,000円</div>
+      <div class="price">30,000円</div>
+      <div class="limit">十名限定</div>
+      <ul>
+        <li>あなた専用の一年の暦<br>（十二ヶ月分の月盤を一枚に）</li>
+        <li>動く月と、待つ月</li>
+        <li>大運の継ぎ目<br>（何歳で運が変わるか）</li>
+        <li>四つの結界すべての鑑定書</li>
+        <li>時間をとって視た、<br>霊視のすべて</li>
+        <li>ご質問に、三度<br>お答えします</li>
+      </ul>
+      <p class="note">
+        神威暦は、<br>
+        この案内からのみ<br>
+        お受けしています。<br><br>
+        一年分の盤を、<br>
+        十二回組み直します。<br>
+        数をこなせる作りに<br>
+        していません。<br><br>
+        十名に達した時点で、<br>
+        閉じます。<br><br>
+        お読みになって、<br>
+        視られていないと感じたら、<br>
+        そう返信してください。<br>
+        理由は伺わず、<br>
+        全額お返しします。
+      </p>
+    </div>
+
+    <div class="close">
+      <div class="sigil">神威</div>
+      <a class="btn" href="https://kamuy-reishi.stores.jp">神威暦を申し込む</a>
+      <a class="sub-link" href="/">順番を待つ ／ 神威について</a>
+    </div>
+
+  </div>
+</main>
+
+<footer>KAMUY</footer>
+
+</body>
+</html>
