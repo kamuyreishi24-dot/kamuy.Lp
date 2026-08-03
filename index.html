@@ -110,6 +110,30 @@
   .origin p.dim { color: var(--dim); }
   .origin .signoff { margin-top: 2.6rem; font-size: 0.76rem; letter-spacing: 0.32em; color: var(--aurora-violet); text-align: right; }
 
+  .doctrine { padding-left: 5vw; padding-right: 5vw; }
+  .doctrine .section-inner { max-width: 22em; }
+  .doctrine p {
+    font-family: 'Noto Serif JP', serif; font-weight: 300;
+    font-size: min(4.3vw, 1.08rem);
+    letter-spacing: 0.01em; line-height: 2.05;
+    color: var(--frost); margin-bottom: 1.8rem;
+    text-align: left; line-break: strict;
+  }
+  .doctrine p.dim { color: var(--dim); }
+  .doctrine p.creed {
+    color: var(--gold-thread); font-weight: 500;
+    padding-left: 1.1rem; margin: 2.6rem 0;
+    border-left: 1px solid rgba(201,168,106,0.35);
+  }
+  .doctrine .lead {
+    text-align: center; font-size: 0.72rem;
+    letter-spacing: 0.4em; color: var(--aurora-teal);
+    margin-bottom: 3.4rem;
+  }
+  .doctrine .rule-mid {
+    width: 1px; height: 56px; margin: 3.2rem auto;
+    background: linear-gradient(to bottom, transparent, rgba(201,168,106,0.4), transparent);
+  }
   .seals-head { text-align: center; margin-bottom: 6vh; }
   .seals-head h2 {
     font-family: 'Noto Serif JP', serif; font-weight: 300;
@@ -159,6 +183,38 @@
   select option { background: var(--void-deep); color: var(--frost); }
   input::placeholder, textarea::placeholder { color: var(--dim); opacity: 0.6; }
   input:focus, select:focus, textarea:focus { outline: none; border-color: var(--aurora-teal); }
+  .consent {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    margin-top: 0.3rem; cursor: pointer;
+  }
+  .consent input[type="checkbox"] {
+    appearance: none; -webkit-appearance: none;
+    flex: 0 0 auto; width: 1.15rem; height: 1.15rem;
+    margin: 0.25rem 0 0; padding: 0;
+    border: 1px solid rgba(201,168,106,0.55);
+    background: rgba(5,7,9,0.6); border-radius: 2px;
+    position: relative; cursor: pointer;
+    transition: border-color .3s ease, background .3s ease;
+  }
+  .consent input[type="checkbox"]:checked {
+    border-color: var(--gold-thread);
+    background: rgba(201,168,106,0.15);
+  }
+  .consent input[type="checkbox"]:checked::after {
+    content: ""; position: absolute;
+    left: 0.3rem; top: 0.1rem;
+    width: 0.32rem; height: 0.62rem;
+    border-right: 1.5px solid var(--gold-thread);
+    border-bottom: 1.5px solid var(--gold-thread);
+    transform: rotate(42deg);
+  }
+  .consent input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--aurora-teal); outline-offset: 3px;
+  }
+  .consent span {
+    font-size: 0.79rem; line-height: 1.95;
+    letter-spacing: 0.02em; color: var(--dim);
+  }
   .submit-row { margin-top: 1.4rem; display: flex; flex-direction: column; align-items: center; gap: 1.3rem; }
   .submit-btn {
     width: 100%; padding: 1.1rem; border: 1px solid var(--gold-thread); background: transparent;
@@ -227,7 +283,7 @@
   <div class="scroll-hint" aria-hidden="true"></div>
 </section>
 
-<section class="origin">
+<section class="origin" id="about">
   <div class="section-inner">
     <p>小さい頃から<br>人の奥が視えることがあった。</p>
     <p>最初は、ただ恐ろしかった。視えたものを、<br>どう扱えばいいのか分からなかったから。</p>
@@ -327,10 +383,15 @@
         <span class="hint">視た内容を、こちらへ届けます</span>
       </div>
 
+      <label class="consent" for="newsletter">
+        <input type="checkbox" id="newsletter" name="お知らせ配信" value="希望する" checked>
+        <span>節入りごとの暦の知らせと、神威からの案内を受け取る<br>（外していただいても、鑑定はお届けします）</span>
+      </label>
+
       <div class="submit-row">
         <button type="submit" class="submit-btn">視てもらう</button>
         <p class="follow-note">フォローしてくださった方から、<br>順に視ていきます。</p>
-        <p class="privacy-note">LINEへの登録は求めません。記された情報は鑑定のためだけに使います。</p>
+        <p class="privacy-note">LINEへの登録は求めません。記された情報は鑑定と、お知らせの配信のためだけに使います。配信はいつでもお止めできます。</p>
         <p class="error-note" id="errorNote">うまく届きませんでした。少し時間をおいて、もう一度お試しください。</p>
       </div>
     </form>
