@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>神威</title>
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<style>
+/* 鑑定ページの入口。神威のサイトの中に、GAS の鑑定ページを全画面で映すだけ（GAS の注意の帯を出さないため） */
+html,body{margin:0;height:100%;background:#0a0907}
+iframe{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
+</style>
+</head>
+<body>
+<iframe id="k" title="神威の鑑定"></iframe>
+<script>
+/* ここだけ書き換える（運用者）：公開プロジェクトの「ウェブアプリの URL」（…/exec で終わる） */
+var EXEC_URL = 'https://script.google.com/macros/s/AKfycbwAtP1MejehTJdtSJIwC6q7RdJ4O1s4fNvC5ZKPvXFbTlwKZQcxDHXlDA5npRjRjWEmIw/exec';
+(function () {
+  var t = new URLSearchParams(location.search).get('t') || '';
+  /* 合言葉は 32 字以上の 0-9a-f だけを通す（公開プロジェクトの PUB_TOKEN_RE_ と同じ） */
+  if (!/^[0-9a-f]{32,}$/.test(t)) { document.body.innerHTML = '<p style="color:#ddd3c0;font:15px serif;text-align:center;margin-top:40vh">メールのリンクから開いてください。</p>'; return; }
+  document.getElementById('k').src = EXEC_URL + '?t=' + encodeURIComponent(t);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>受付 天極星紋術</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Shippori+Mincho+B1:wght@700;800&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--snow:#f2f4f5;--snow2:#e7ecef;--ink:#18202b;--ink2:#3a4553;--ink3:#6b7684;--hair:rgba(24,32,43,.12);
+ --night:#060d16;--night2:#0c1828;--night3:#13233a;--teal:#5fe0c4;--mint:#9ff5e0;--sky:#8fc9f5;--violet:#a58bf0;--frost:#e8f0f6;--frost2:#b9c6d3;
+ --bg:var(--snow);--fg:var(--ink2);--fgh:var(--ink);--sub:var(--ink3);--line:var(--hair);--card:#fff;
+ --aurora:linear-gradient(100deg,#5fe0c4 0%,#86f0a8 28%,#8fc9f5 55%,#a58bf0 80%,#e7a6e8 100%);
+ --jp:"Shippori Mincho","Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","Noto Serif CJK JP",serif;--en:"Cormorant Garamond","Times New Roman",serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:var(--night2);--fg:#c9d4de;--fgh:var(--frost);--sub:#8e9aa7;--line:rgba(232,240,246,.14);--card:#10203a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:var(--night2);--fg:#c9d4de;--fgh:var(--frost);--sub:#8e9aa7;--line:rgba(232,240,246,.14);--card:#10203a;color-scheme:dark}
+*{box-sizing:border-box}
+html{background:var(--bg);-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--jp);font-size:16px;line-height:2.1;letter-spacing:.06em;overflow-x:hidden}
+p{margin:0}
+h1,h2,h3{font-weight:600;margin:0;color:var(--fgh);letter-spacing:.12em}
+a{color:inherit}
+.wrap{max-width:560px;margin:0 auto;padding:0 22px}
+section{position:relative;padding:76px 0}
+.k{font-family:var(--en);font-style:italic;font-size:15px;letter-spacing:.3em;color:var(--sub);margin-bottom:10px}
+.h{font-size:24px;line-height:1.7;margin-bottom:26px}
+.lead{margin-bottom:22px}
+.night{background:var(--night);color:#c9d4de}
+.night h1,.night h2,.night h3{color:var(--frost)}
+.night .k{color:#7e8fa3}
+.au{background:var(--aurora);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* 星紋 */
+.sigil .sgl{stroke-dasharray:var(--len,2400);stroke-dashoffset:var(--len,2400);animation:draw 2.6s cubic-bezier(.5,.1,.3,1) .3s forwards}
+.sigil circle[fill="url(#sg)"]{opacity:0;animation:star .6s ease forwards}
+.sigil circle[fill="url(#sg)"]:nth-of-type(n){animation-delay:2.2s}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes star{to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.sigil .sgl{animation:none;stroke-dashoffset:0}.sigil circle[fill="url(#sg)"]{animation:none;opacity:1}}
+.fig{width:min(260px,72vw);margin:8px auto 0}
+.fig svg{display:block;width:100%;height:auto}
+.cap{text-align:center;font-size:13px;color:var(--sub);margin-top:12px;letter-spacing:.08em}
+.night .cap{color:#8a9bb0}
+
+/* 七つの星 */
+.stars{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.stars li{display:grid;grid-template-columns:2.2em 3.6em 1fr;align-items:baseline;gap:4px;padding:13px 2px;border-bottom:1px solid var(--line)}
+.stars .n{font-size:13px;color:var(--sub)}
+.stars b{font-weight:600;color:var(--fgh);letter-spacing:.14em}
+.stars span{font-size:14.5px;line-height:1.85}
+
+.btn{display:block;width:100%;max-width:340px;margin:0 auto;padding:17px 18px;border:0;border-radius:999px;background:var(--aurora);color:#06121c;font-family:var(--jp);font-size:16px;font-weight:600;letter-spacing:.16em;text-align:center;text-decoration:none;cursor:pointer;box-shadow:0 10px 30px -12px rgba(95,224,196,.7)}
+.btn:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+.note{font-size:13.5px;color:var(--sub);line-height:1.95}
+.night .note{color:#93a3b5}
+
+.list{margin:0;padding:0;list-style:none}
+.list li{position:relative;padding:9px 0 9px 1.5em;border-bottom:1px dashed var(--line);line-height:1.9}
+.list li::before{content:"";position:absolute;left:.2em;top:1.15em;width:7px;height:7px;transform:rotate(45deg);border:1px solid var(--teal)}
+.list.no li::before{border-color:var(--sub);width:9px;height:1px;transform:none;top:1.3em;border-width:1px 0 0}
+
+.foot{padding:44px 0 56px;text-align:center;font-size:12.5px;color:var(--sub);line-height:2}
+.foot b{display:block;font-size:15px;letter-spacing:.3em;color:var(--fgh);font-weight:600;margin-bottom:6px}
+
+/* 受付のあとに一度だけ読むページ。上から「受け取った → この鑑定で変わること → 待つあいだに」の三段で終える */
+section{padding:72px 0}
+.num{font-size:13px;letter-spacing:.4em;color:var(--sub);margin-bottom:10px;display:flex;align-items:center;gap:12px}
+.num::after{content:"";flex:0 0 40px;height:1px;background:currentColor;opacity:.5}
+.night .num{color:#7e8fa3}
+.h{text-wrap:balance}
+.paper{position:relative}
+.paper::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .4  0 0 0 0 .47  0 0 0 .12 0'/></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>")}
+.paper>.wrap{position:relative}
+.top{position:relative;overflow:hidden;background:radial-gradient(110% 70% at 50% 30%,#13233a 0%,#081322 55%,var(--night) 100%);color:#c9d4de;text-align:center;padding:60px 0 56px}
+.top .num{justify-content:center;color:#7e8fa3}
+.top .num::after{display:none}
+.top h1{font-family:"Shippori Mincho B1",var(--jp);font-weight:800;font-size:26px;line-height:1.7;letter-spacing:.18em;margin:4px 0 6px;color:var(--frost)}
+.sg{position:relative;width:min(240px,64vw);aspect-ratio:1;margin:18px auto 0}
+.sg canvas{position:absolute;inset:-14%;width:128%;height:128%;-webkit-mask:radial-gradient(circle,#000 50%,transparent 70%);mask:radial-gradient(circle,#000 50%,transparent 70%)}
+.sg svg{position:relative;width:100%;height:100%;display:block}
+.top .l{font-size:15px;line-height:2.05;margin-top:16px}
+.top .l b{color:var(--mint);font-weight:600}
+.when{margin-top:26px;display:inline-block;text-align:left;font-size:13.5px;line-height:1.95;color:#a9b8c8;border-top:1px solid rgba(232,240,246,.14);padding-top:16px}
+.when b{color:var(--frost);font-weight:600}
+/* この鑑定で変わること */
+.pts{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:30px}
+.pts li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
+.pts .ic{width:44px;height:44px;color:var(--fgh)}
+.pts .ic svg{width:100%;height:100%;display:block}
+.pts b{display:block;font-size:17px;color:var(--fgh);letter-spacing:.12em;line-height:1.7;margin-bottom:4px}
+.pts span{display:block;font-size:14.5px;line-height:2}
+.close{margin-top:40px;text-align:center;font-family:"Shippori Mincho B1",var(--jp);font-weight:700;font-size:19px;line-height:2;letter-spacing:.16em;color:var(--fgh)}
+/* 待つあいだに */
+.wait p{font-size:15px;line-height:2.05}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:16px 0}
+.chips span{padding:6px 13px;border-radius:999px;border:1px solid rgba(232,240,246,.25);font-size:13.5px;letter-spacing:.12em;color:#dfe8ef}
+.wait .s{font-size:13.5px;color:#a9b8c8}
+.inv{margin-top:34px;padding-top:20px;border-top:1px solid rgba(232,240,246,.14);font-size:13.5px;line-height:2;color:#a9b8c8}
+.follow{text-align:center;margin-top:28px}
+.follow a{font-size:14px;letter-spacing:.12em;color:var(--frost)}
+</style>
+</head>
+<body>
+
+<header class="top">
+ <div class="wrap">
+  <p class="num">受付</p>
+  <h1>お申し込みを、<br>受けとりました</h1>
+  <div class="sg" id="sg"></div>
+  <p class="l">あなたの名と生まれた日から、<br>天極星紋をひらいています。</p>
+  <p class="when"><b>まもなく</b>　あなたの星紋を描いたメール<br><b id="daysText">3日以内</b>　鑑定のページのお知らせ<br>届かないときは、迷惑メールのフォルダを</p>
+ </div>
+</header>
+
+<main>
+<section class="paper">
+ <div class="wrap">
+  <p class="num">天極星紋術</p>
+  <h2 class="h">この鑑定で、変わること</h2>
+  <ol class="pts">
+   <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" stroke-opacity=".25"/><path d="M22 11L29 22L22 33L15 22Z" fill="none" stroke="#2aa58f" stroke-width="1.3"/><circle cx="22" cy="22" r="1.8" fill="#2aa58f"/></svg></span>
+    <div><b>戻る場所ができる</b><span>星紋の真ん中、天極はあなた自身。芯を知ると、人に合わせて揺れていた選択を、自分の軸で選べるようになります。</span></div></li>
+   <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" stroke-opacity=".25"/><path d="M22 22L36 12" stroke="#2f7fb0" stroke-width="1.3"/><circle cx="22" cy="22" r="1.8" fill="#2f7fb0"/><circle cx="36" cy="12" r="3" fill="#2f7fb0"/></svg></span>
+    <div><b>いま使える力が分かる</b><span>いちばん遠くへ伸びた星は、もう外へ出ている力。足りないものを探すより、その力から動くと、流れが変わりはじめます。</span></div></li>
+   <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" stroke-opacity=".25"/><path d="M10 26Q22 10 34 26" fill="none" stroke="#6a4fc0" stroke-width="1.3"/><circle cx="22" cy="18" r="1.8" fill="#6a4fc0"/></svg></span>
+    <div><b>次の一歩が見える</b><span>いま何が起きていて、この先どこへ流れていくのか。神威が霊視で読み、注ぐものと手放すものを言葉にします。</span></div></li>
+  </ol>
+  <p class="close">自分の形を知ったときから、<br>流れは変わりはじめます。</p>
+ </div>
+</section>
+
+<section class="night">
+ <div class="wrap wait">
+  <p class="num">待つあいだに</p>
+  <p>七つの星から、いま気になる星をひとつ選んでおいてください。</p>
+  <div class="chips"><span>芯</span><span>縁</span><span>役目</span><span>実り</span><span>情</span><span>転機</span><span>守り</span></div>
+  <p class="s">星紋のメールが届いたら、その星が天極から遠いか、近いか。遠ければもう外へ出ている力、近ければまだ奥にしまわれた力です。</p>
+  <p class="inv" id="inv" hidden>ページの終わりに、本鑑定へのお招きが添えられていることがあります。本鑑定は、神威が星紋を視て、さらに深く読むべき星を持つ方にだけ、お送りしているものです。</p>
+  <p class="follow"><a id="th" href="#">Threads の神威</a></p>
+ </div>
+</section>
+</main>
+
+<footer class="foot">
+ <div class="wrap"><b>神威</b>天極星紋術<br>鑑定は、未来を約束するものではありません。</div>
+</footer>
+
+<script>
+/* ここだけ書き換える（運用者） */
+var CONFIG = {
+  THREADS_URL: 'ここに Threads のプロフィールの URL',
+  DAYS: '3日以内',              // 届くまでの目安。LP と同じ値
+  INVITE_LINE: true             // 本鑑定の招待制（NEXT_TASKS_45 TASK 6）は ship 済み（2026-10-07）
+};
+var PUB_KANJI_NUM_ = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+function pubSigilPts_(seedStr, size) {
+  var h = 2166136261;
+  Array.from(String(seedStr)).forEach(function (ch) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; });
+  function R() { h = Math.imul(h ^ (h >>> 15), 2246822507) >>> 0; h = Math.imul(h ^ (h >>> 13), 3266489909) >>> 0; return ((h ^= h >>> 16) >>> 0) / 4294967296; }
+  var c = size / 2, pts = [], fs = [], ang = [];
+  for (var i = 0; i < 7; i++) { var a = (i / 7) * Math.PI * 2 + R() * 0.7 - 0.35 - Math.PI / 2, f = 0.38 + R() * 0.5, r = c * f; pts.push([c + Math.cos(a) * r, c + Math.sin(a) * r]); fs.push(f); ang.push(a); }
+  var starR = pts.map(function (p, j) { return j === 0 ? 3.2 : 1.8 + R() * 1.2; });
+  return { c: c, pts: pts, f: fs, ang: ang, starR: starR };
+}
+var PUB_SG_DEFS_ = '<defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5fe0c4"/><stop offset=".5" stop-color="#8fc9f5"/><stop offset="1" stop-color="#a58bf0"/></linearGradient></defs>';
+/** 紋の枠（円・72 の目盛り・点線の内円）。 */
+function pubSigilFrame_(c, stroke) {
+  var ticks = '';
+  for (var k = 0; k < 72; k++) {
+    var an = k / 72 * Math.PI * 2, r1 = c - 2, r2 = c - (k % 6 === 0 ? 9 : 5);
+    ticks += '<line x1="' + (c + Math.cos(an) * r1).toFixed(1) + '" y1="' + (c + Math.sin(an) * r1).toFixed(1) + '" x2="' + (c + Math.cos(an) * r2).toFixed(1) + '" y2="' + (c + Math.sin(an) * r2).toFixed(1) + '" stroke="' + stroke + '" stroke-opacity="' + (k % 6 === 0 ? .45 : .2) + '" stroke-width=".7"/>';
+  }
+  return '<circle cx="' + c + '" cy="' + c + '" r="' + (c - 2) + '" fill="none" stroke="' + stroke + '" stroke-opacity=".28" stroke-width=".8"/>' + ticks +
+    '<circle cx="' + c + '" cy="' + c + '" r="' + (c * .62) + '" fill="none" stroke="' + stroke + '" stroke-opacity=".14" stroke-width=".8" stroke-dasharray="2 5"/>';
+}
+/** 七つの星を結ぶ線（0→3→6→2→5→1→4）。 */
+function pubSigilPath_(pts) { return [0, 3, 6, 2, 5, 1, 4].map(function (k, j) { return (j ? 'L' : 'M') + pts[k][0].toFixed(1) + ' ' + pts[k][1].toFixed(1); }).join('') + 'Z'; }
+/** 線の長さ（閉じた七角の星の全長・切り上げ＋余白）。描く動きの dasharray に使う（固定の 900・1400 だと長い紋で最後の線が描かれずに止まる。2026-10-07）。 */
+function pubSigilLen_(pts) { var o = [0, 3, 6, 2, 5, 1, 4, 0], L = 0; for (var j = 1; j < o.length; j++) { var a = pts[o[j - 1]], b = pts[o[j]]; L += Math.sqrt(Math.pow(a[0] - b[0], 2) + Math.pow(a[1] - b[1], 2)); } return Math.ceil(L) + 8; }
+/**
+ * あなたの紋（見本の sigil() と同じ計算。同じ種には必ず同じ形）。円・目盛り・七つの星を結ぶ線・中心の菱形。
+ */
+function pubSigil_(seedStr, size, stroke) {
+  var d = pubSigilPts_(seedStr, size), c = d.c;
+  var stars = d.pts.map(function (p, j) { return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + d.starR[j] + '" fill="url(#sg)"/>'; }).join('');
+  return '<svg viewBox="0 0 ' + size + ' ' + size + '" class="sigil" aria-hidden="true">' + PUB_SG_DEFS_ + '\n' +
+    '   ' + pubSigilFrame_(c, stroke) + '\n' +
+    '   <path class="sgl" style="--len:' + pubSigilLen_(d.pts) + '" d="' + pubSigilPath_(d.pts) + '" fill="none" stroke="url(#sg)" stroke-width="1.1" stroke-linejoin="round"/>' + stars + '\n' +
+    '   <path d="M' + c + ' ' + (c - 9) + 'L' + (c + 6) + ' ' + c + 'L' + c + ' ' + (c + 9) + 'L' + (c - 6) + ' ' + c + 'Z" fill="none" stroke="' + stroke + '" stroke-opacity=".6" stroke-width=".9"/></svg>';
+}
+function pubMonRead_(seedStr) {
+  var d = pubSigilPts_(seedStr, 300), f = d.f;
+  var far = 1, deep = 1;
+  for (var i = 2; i < 7; i++) { if (f[i] > f[far]) far = i; if (f[i] < f[deep]) deep = i; }
+  return { d: d, core: f[0] >= 0.63 ? 'far' : 'near', far: far, deep: deep, rest: [1, 2, 3, 4, 5, 6].filter(function (i) { return i !== far; }) };
+}
+var ADDRESSEE_HONORIFICS_ = ['様', 'さま', 'サマ', 'さん', '殿', 'どの'];
+function buildAddresseeText_(name) {
+  var base = String(name == null ? '' : name).replace(/[\s　]+/g, ' ').trim();
+  if (!base) return '';
+  for (var i = 0; i < ADDRESSEE_HONORIFICS_.length; i++) {
+    var suffix = ADDRESSEE_HONORIFICS_[i];
+    if (base.length > suffix.length && base.slice(-suffix.length) === suffix) {
+      base = base.slice(0, -suffix.length).trim();
+      break;
+    }
+  }
+  return base ? base + '様' : '';
+}
+
+function sky(cv, px, py, n, k) {
+  n = n || 230; k = k || 1;
+  var ctx = cv.getContext('2d'), W, H, cx, cy, stars = [], still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, t0 = performance.now(), run = true, raf = 0;
+  var cols = ['232,240,246', '159,245,224', '143,201,245', '165,139,240'];
+  function size() {
+    var dpr = Math.min(2, window.devicePixelRatio || 1); W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx = W * px; cy = H * py; var R = Math.hypot(Math.max(cx, W - cx), Math.max(cy, H - cy)), s = 20261007; stars = [];
+    var rnd = function () { s = (s * 16807) % 2147483647; return s / 2147483647; };
+    for (var i = 0; i < n; i++) { var v = rnd(); stars.push({ r: 14 + Math.pow(rnd(), .75) * R, a: rnd() * 6.2832, len: .12 + rnd() * .55, w: .35 + rnd() * 1.05, al: (.12 + rnd() * .5) * k, c: v < .64 ? cols[0] : v < .8 ? cols[1] : v < .93 ? cols[2] : cols[3] }); }
+  }
+  function frame(now) {
+    var rot = (now - t0) / 1000 * .018; ctx.clearRect(0, 0, W, H);
+    for (var i = 0; i < stars.length; i++) {
+      var st = stars[i], a = st.a + rot;
+      for (var k = 0; k < 4; k++) { ctx.beginPath(); ctx.arc(cx, cy, st.r, a - st.len * (1 - k / 4), a - st.len * (1 - (k + 1) / 4)); ctx.strokeStyle = 'rgba(' + st.c + ',' + (st.al * (k + 1) / 5).toFixed(3) + ')'; ctx.lineWidth = st.w; ctx.stroke(); }
+      ctx.beginPath(); ctx.arc(cx + Math.cos(a) * st.r, cy + Math.sin(a) * st.r, st.w * .85, 0, 6.2832); ctx.fillStyle = 'rgba(' + st.c + ',' + Math.min(1, st.al + .35).toFixed(3) + ')'; ctx.fill();
+    }
+    if (!still && run && cv.isConnected) raf = requestAnimationFrame(frame);
+  }
+  size(); frame(t0);
+  window.addEventListener('resize', function () { size(); if (still) frame(performance.now()); });
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { run = es[0].isIntersecting; if (run && !still) { cancelAnimationFrame(raf); raf = requestAnimationFrame(frame); } }).observe(cv);
+}
+
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  $('daysText').textContent = CONFIG.DAYS;
+  $('inv').hidden = !CONFIG.INVITE_LINE;
+  /* 星紋はメールで初めて見せる。ここでは天極の印だけを出す */
+  $('sg').innerHTML = '<canvas aria-hidden="true"></canvas><svg viewBox="0 0 240 240" aria-hidden="true">' + pubSigilFrame_(120, '#e8f0f6') +
+    '<path d="M120 104L131 120L120 136L109 120Z" fill="none" stroke="#9ff5e0" stroke-width="1.4"/><circle cx="120" cy="120" r="2.2" fill="#eafffa"/></svg>';
+  try { sky($('sg').querySelector('canvas'), .5, .5, 90, .7); } catch (x) { /* 軌跡が無くても印は出る */ }
+  var th = $('th');
+  if (/^https:\/\//.test(CONFIG.THREADS_URL)) { th.href = CONFIG.THREADS_URL; th.target = '_blank'; th.rel = 'noopener'; } else { th.parentNode.hidden = true; }
+})();
+</script>
+</body>
+</html>
