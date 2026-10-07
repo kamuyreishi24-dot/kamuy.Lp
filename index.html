@@ -149,6 +149,7 @@ details p{font-size:14.5px;padding:0 0 14px;line-height:1.95}
 
 <main>
 <form id="f" action="https://api.web3forms.com/submit" method="POST" novalidate>
+ <input type="hidden" name="sid" id="sid" value="">
  <input type="hidden" name="access_key" id="akey" value="">
  <input type="hidden" name="subject" id="subj" value="神威 — 鑑定の依頼が届きました">
  <input type="hidden" name="from_name" value="神威">
@@ -217,7 +218,8 @@ details p{font-size:14.5px;padding:0 0 14px;line-height:1.95}
 <script>
 /* ここだけ書き換える（運用者） */
 var CONFIG = {
-  ACCESS_KEY: '9ae6927f-210e-4137-b69f-89d92c72f95a',   // Web3Forms の access_key（旧 LP と同じ値）。「ここに」で始めると送らずに見本の動きになる
+  DIRECT_URL: 'https://script.google.com/macros/s/AKfycbwAtP1MejehTJdtSJIwC6q7RdJ4O1s4fNvC5ZKPvXFbTlwKZQcxDHXlDA5npRjRjWEmIw/exec', // 神威の受け口（公開プロジェクトの /exec）。空にすると Web3Forms だけで送る
+  ACCESS_KEY: '9ae6927f-210e-4137-b69f-89d92c72f95a',   // Web3Forms の access_key（予備の経路）。「ここに」で始めると送らずに見本の動きになる
   THANKS_URL: '/uketsuke',                          // 送れたあとに進む受付のページ（同じサイトの uketsuke.html）
   DAYS: '3日以内'                                  // 届くまでの目安。守れる日数だけ書く
 };
@@ -248,7 +250,7 @@ function sky(cv, px, py, n, k) {
 }
 (function () {
   var $ = function (id) { return document.getElementById(id); };
-  var live = /^(?!ここに)\S{8,}$/.test(CONFIG.ACCESS_KEY);
+  var live = /^(?!ここに)\S{8,}$/.test(CONFIG.ACCESS_KEY), T0 = Date.now(); // T0: 画面を開いた時刻（受け口は 3 秒未満の送信を受け取ったふりにする）
   $('daysText').textContent = CONFIG.DAYS;
     try { sky($('sky'), .5, .3); } catch (x) { /* 空が描けなくても本文は読める */ }
   $('f').addEventListener('submit', function (e) {
@@ -262,8 +264,38 @@ function sky(cv, px, py, n, k) {
     $('err').textContent = '';
     $('optv').value = $('optin').checked ? '希望する' : '希望しない';
     if (!live) { e.preventDefault(); $('demo').hidden = false; $('demo').textContent = '（見本）ここで送られ、受付のページに進みます。access_key と受付のページの URL を入れると、本当に送れるようになります。'; return; }
-    /* 旧 LP と同じく fetch で送り、成功したら受付のページへ（Web3Forms の redirect 機能に頼らない） */
+    /* fetch で送り、成功したら受付のページへ */
     e.preventDefault();
+    if (!$('sid').value) $('sid').value = newSid();
+    $('sb').disabled = true; $('sb').textContent = '送っています…';
+    var topicEl = document.querySelector('input[name="topic"]:checked');
+    var data = { v: 1, sid: $('sid').value, name: $('Name').value.trim(), birthday: ymdOf($('Birthday').value), topic: topicEl ? topicEl.value : '人生全般',
+      worry: $('Worry').value.trim(), email: $('Email').value.trim(), optin: $('optv').value, adult: $('adult').checked, hp: document.querySelector('input[name="botcheck"]').checked ? '1' : '', ms: Date.now() - T0 };
+    /* 神威の受け口へ直接（text/plain の JSON＝事前確認の無い送信）。ok にならなければ予備の Web3Forms へ同じ sid で */
+    direct(data).then(function (d) {
+      if (d && d.ok) { location.href = CONFIG.THANKS_URL; return; }
+      if (d && d.code === 'invalid') {
+        var JA = { name: 'お名前', birthday: '生年月日', worry: 'いま気になっていること', email: 'メールアドレス', adult: '18歳以上の確認' }, fs = (d.fields || []).map(function (k) { return JA[k]; }).filter(Boolean);
+        if (fs.length) { unlock(); $('err').textContent = fs.join('・') + 'を、もう一度ご確認ください'; return; } // 直せる項目だけ相談者に返す（形の版・sid などは予備の経路へ）
+      }
+      viaWeb3();
+    }, viaWeb3);
+  });
+  function newSid() {
+    var a = new Uint8Array(12), s = '';
+    try { crypto.getRandomValues(a); } catch (x) { for (var i = 0; i < a.length; i++) a[i] = Math.floor(Math.random() * 256); }
+    for (var j = 0; j < a.length; j++) s += ('0' + a[j].toString(16)).slice(-2);
+    return 'lp-' + s; // 27 字（英数字と -）
+  }
+  function direct(data) {
+    if (!/^https:\/\/script\.google\.com\//.test(CONFIG.DIRECT_URL || '')) return Promise.reject(new Error('no direct'));
+    var ctl = window.AbortController ? new AbortController() : null, tm = setTimeout(function () { if (ctl) ctl.abort(); }, 15000);
+    return fetch(CONFIG.DIRECT_URL, { method: 'POST', body: JSON.stringify(data), signal: ctl ? ctl.signal : undefined })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { clearTimeout(tm); return d; }, function (x) { clearTimeout(tm); throw x; });
+  }
+  function unlock() { $('sb').disabled = false; $('sb').textContent = '神威に視てもらう'; }
+  function viaWeb3() {
     $('akey').value = CONFIG.ACCESS_KEY;
     /* 件名の後ろに受付の印を足す。Gmail が同じ件名の申し込みを 1 つのスレッドにまとめると、取り込み済みのスレッドに入った新しい申し込みを取り込めないため（頭の件名は取り込みの検索と同じ） */
     var d = new Date(), p = function (n) { return ('0' + n).slice(-2); };
@@ -276,7 +308,7 @@ function sky(cv, px, py, n, k) {
         $('sb').disabled = false; $('sb').textContent = '神威に視てもらう';
         $('err').textContent = '送れませんでした。電波の良いところで、もう一度お試しください。';
       });
-  });
+  }
   var hero = document.querySelector('.hero'), st = $('sticky');
   function onScroll() {
     var r = $('draw').getBoundingClientRect(), vh = window.innerHeight;
