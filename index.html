@@ -150,7 +150,7 @@ details p{font-size:14.5px;padding:0 0 14px;line-height:1.95}
 <main>
 <form id="f" action="https://api.web3forms.com/submit" method="POST" novalidate>
  <input type="hidden" name="access_key" id="akey" value="">
- <input type="hidden" name="subject" value="神威 — 鑑定の依頼が届きました">
+ <input type="hidden" name="subject" id="subj" value="神威 — 鑑定の依頼が届きました">
  <input type="hidden" name="from_name" value="神威">
  <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off">
 
@@ -265,6 +265,9 @@ function sky(cv, px, py, n, k) {
     /* 旧 LP と同じく fetch で送り、成功したら受付のページへ（Web3Forms の redirect 機能に頼らない） */
     e.preventDefault();
     $('akey').value = CONFIG.ACCESS_KEY;
+    /* 件名の後ろに受付の印を足す。Gmail が同じ件名の申し込みを 1 つのスレッドにまとめると、取り込み済みのスレッドに入った新しい申し込みを取り込めないため（頭の件名は取り込みの検索と同じ） */
+    var d = new Date(), p = function (n) { return ('0' + n).slice(-2); };
+    $('subj').value = '神威 — 鑑定の依頼が届きました（' + p(d.getMonth() + 1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) + p(d.getSeconds()) + '-' + Math.random().toString(36).slice(2, 6) + '）';
     $('sb').disabled = true; $('sb').textContent = '送っています…';
     fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData($('f')) })
       .then(function (r) { return r.json(); })
