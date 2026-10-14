@@ -131,6 +131,7 @@ details p{font-size:14.5px;padding:0 0 14px;line-height:1.95}
 .sticky{position:fixed;left:0;right:0;bottom:0;z-index:5;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,rgba(6,13,22,0),rgba(6,13,22,.92) 40%);transform:translateY(110%);transition:transform .3s}
 .sticky.on{transform:none}
 .sticky .btn{padding:14px 16px;font-size:15px}
+.jw{word-break:keep-all;overflow-wrap:anywhere;line-break:strict}
 </style>
 </head>
 <body>
@@ -192,7 +193,7 @@ details p{font-size:14.5px;padding:0 0 14px;line-height:1.95}
   </div>
   <p class="err" id="err" role="alert" style="margin-top:26px"></p>
   <button class="btn" type="submit" id="sb">神威に視てもらう</button>
-  <p class="after">鑑定は無料です。<br>送ったあと、星紋を描いたメールが届きます。<br>鑑定のページは、<span id="daysText">3日以内</span>を目安にお届けします。</p>
+  <p class="after jw">鑑定は無料です。<br>送ったあと、<wbr>星紋を描いた<wbr>メールが届きます。<br>鑑定のページは、<wbr><span id="daysText">3日以内</span>を目安に<wbr>お届けします。</p>
   <p class="demo" id="demo" hidden></p>
  </div>
 </section>
@@ -204,7 +205,7 @@ details p{font-size:14.5px;padding:0 0 14px;line-height:1.95}
   <details><summary>費用はかかりますか</summary><p>かかりません。</p></details>
   <details><summary>何が届きますか</summary><p>「【神威】〇〇様への鑑定ができました」という件名のメールが届きます。中のリンクから、あなただけのページを開いてください。</p></details>
   <details><summary>お知らせを止めたい</summary><p>届いたメールに「停止」とだけ返信してください。それ以降はお送りしません。鑑定のお知らせは、止めたあとも届きます。</p></details>
-  <details><summary>メールが届きません</summary><p>迷惑メールのフォルダをご覧ください。アドレスの書き間違いがあると、お届けできません。そのときは、もう一度お申し込みください。</p></details>
+  <details><summary>メールが届きません</summary><p class="jw">迷惑メールの<wbr>フォルダを<wbr>ご覧ください。<wbr>アドレスの<wbr>書き間違いが<wbr>あると、<wbr>お届けできません。<wbr>そのときは、<wbr>もう一度<wbr>お申し込みください。</p></details>
  </div>
 </section>
 </main>
