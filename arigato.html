@@ -7,157 +7,191 @@
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#060d16">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--snow:#f2f4f5;--ink:#18202b;--ink2:#3a4553;--ink3:#6b7684;--hair:rgba(24,32,43,.12);
- --night:#060d16;--night2:#0c1828;--frost:#e8f0f6;--teal:#5fe0c4;--mint:#9ff5e0;
- --bg:var(--snow);--fg:var(--ink2);--fgh:var(--ink);--sub:var(--ink3);--line:var(--hair);--card:#fff;
+/*
+  文字の折り返しの決まり（このページ全体）
+  - 日本語は word-break:keep-all。折り返してよい所だけに <wbr> を置く（文節の切れ目）。
+    iPhone の Safari でも同じ所でしか折れない。どの幅でも「す。」だけの行が出ない。
+  - 見出しとあいさつは、行を決めて <span class="l"> で組む（一行ずつ。入らない幅では文節で折れる）。
+  - 確かめ: 320〜430px の 8 つの幅で、3 字以下の行・行頭の句読点・横のはみ出しが 0。
+*/
+:root{--snow:#f2f4f5;--ink:#18202b;--ink2:#38434f;--ink3:#67727f;--hair:rgba(24,32,43,.12);
+ --night:#060d16;--night2:#0b1625;--frost:#e8f0f6;--teal:#5fe0c4;
+ --bg:var(--snow);--fg:var(--ink2);--fgh:var(--ink);--sub:var(--ink3);--line:var(--hair);--card:#fff;--cardline:rgba(24,32,43,.09);
  --aurora:linear-gradient(100deg,#5fe0c4 0%,#86f0a8 28%,#8fc9f5 55%,#a58bf0 80%,#e7a6e8 100%);
  --ig:linear-gradient(100deg,#f58529 0%,#dd2a7b 45%,#8134af 75%,#515bd4 100%);
- --jp:"Shippori Mincho","Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;--en:"Cormorant Garamond","Times New Roman",serif}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:var(--night2);--fg:#c9d4de;--fgh:var(--frost);--sub:#8e9aa7;--line:rgba(232,240,246,.14);--card:#10203a;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:var(--night2);--fg:#c9d4de;--fgh:var(--frost);--sub:#8e9aa7;--line:rgba(232,240,246,.14);--card:#10203a;color-scheme:dark}
+ --jp:"Shippori Mincho","Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:var(--night2);--fg:#c3cfda;--fgh:var(--frost);--sub:#8995a3;--line:rgba(232,240,246,.13);--card:#0f1d31;--cardline:rgba(232,240,246,.1);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:var(--night2);--fg:#c3cfda;--fgh:var(--frost);--sub:#8995a3;--line:rgba(232,240,246,.13);--card:#0f1d31;--cardline:rgba(232,240,246,.1);color-scheme:dark}
+
 *{box-sizing:border-box}
 html{background:var(--bg);-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--jp);font-size:16px;line-height:2.05;letter-spacing:.06em;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--jp);font-size:15.5px;line-height:2;letter-spacing:.05em;overflow-x:hidden;
+ word-break:keep-all;overflow-wrap:anywhere;line-break:strict;-webkit-font-smoothing:antialiased}
 p{margin:0}
-h1,h2,h3,ol.st b{word-break:keep-all;overflow-wrap:anywhere;text-wrap:balance}
-h1,h2{font-weight:600;margin:0;color:var(--fgh);letter-spacing:.12em}
-.wrap{max-width:560px;margin:0 auto;padding:0 22px}
-.k{font-family:var(--en);font-style:italic;font-size:15px;letter-spacing:.3em;color:var(--sub);margin-bottom:8px}
+h1,h2,h3{margin:0;font-weight:600;color:var(--fgh);font-feature-settings:"palt";text-wrap:balance}
+a{color:inherit}
+.wrap{max-width:520px;margin:0 auto;padding:0 24px}
+.l{display:inline-block}            /* 一行の単位。入らない幅では中の <wbr> で折れる */
+.en{letter-spacing:.02em}           /* 文中の英字は詰める */
 
-/* 冒頭（夜） */
-.hero{background:var(--night);color:#c9d4de;padding:calc(64px + env(safe-area-inset-top,0px)) 0 60px;text-align:center;position:relative;overflow:hidden}
-.hero::before{content:"";position:absolute;left:-20%;right:-20%;top:-40%;height:70%;background:var(--aurora);opacity:.22;filter:blur(60px);transform:rotate(-6deg)}
+/* ─ あいさつ（夜） ─ */
+.hero{background:var(--night);color:#c3cfda;text-align:center;position:relative;overflow:hidden;
+ padding:calc(72px + env(safe-area-inset-top,0px)) 0 68px}
+.hero::before{content:"";position:absolute;left:-30%;right:-30%;top:-46%;height:72%;background:var(--aurora);opacity:.2;filter:blur(64px);transform:rotate(-7deg)}
 .hero .wrap{position:relative}
-.hero .k{color:#7e8fa3}
-.hero h1{color:var(--frost);font-size:25px;line-height:1.8;text-wrap:balance}
-.hero .au{background:var(--aurora);-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{margin-top:22px;font-size:15.5px;line-height:2.1}
-.mark{display:block;margin:0 auto 22px;width:30px;height:42px}
+.mark{display:block;margin:0 auto 30px;width:28px;height:40px}
+.hero h1{color:var(--frost);font-size:clamp(20px,6.2vw,26px);line-height:1.75;letter-spacing:.1em}
+.hero h1 .au{background:var(--aurora);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{margin-top:28px;font-size:15px;line-height:2.15;letter-spacing:.06em}
+.hero .lead + .lead{margin-top:14px}
 
-/* 手順 */
-.steps{padding:56px 0 20px}
-.steps h2{font-size:20px;line-height:1.8;margin-bottom:22px;text-align:center}
-ol.st{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:16px}
-ol.st li{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 20px 20px 62px;position:relative}
-ol.st li::before{content:counter(s);position:absolute;left:18px;top:18px;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-family:var(--en);font-size:18px;color:var(--night);background:var(--aurora)}
-ol.st b{display:block;color:var(--fgh);font-weight:600;letter-spacing:.1em;font-size:16.5px;line-height:1.8}
-ol.st span{display:block;font-size:14.5px;line-height:1.95;margin-top:4px}
+/* ─ 見出し ─ */
+.sec{padding:60px 0 0}
+.sec h2{font-size:19px;line-height:1.8;letter-spacing:.12em;text-align:center}
+.sec h2::after{content:"";display:block;width:22px;height:1px;margin:16px auto 0;background:var(--aurora)}
 
-/* ボタン */
-.cta{display:grid;gap:12px;margin:28px 0 8px}
-.btn{display:flex;align-items:center;justify-content:center;gap:10px;min-height:58px;border-radius:999px;text-decoration:none;font-weight:600;letter-spacing:.14em;font-size:16px;padding:0 22px;text-align:center}
-.btn svg{width:22px;height:22px;flex:none}
-.btn.ig{background:var(--ig);color:#fff;box-shadow:0 8px 24px rgba(221,42,123,.28)}
-.btn.dm{background:transparent;color:var(--fgh);border:1.5px solid var(--fgh)}
-.btn:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
-.small{font-size:13px;color:var(--sub);text-align:center;line-height:1.9}
+/* ─ 手順（順番がある） ─ */
+ol.st{list-style:none;margin:30px 0 0;padding:0;counter-reset:s}
+ol.st li{counter-increment:s;position:relative;padding:0 0 26px 50px}
+ol.st li:last-child{padding-bottom:0}
+ol.st li::before{content:counter(s);position:absolute;left:0;top:2px;width:30px;height:30px;border-radius:50%;
+ display:grid;place-items:center;font-size:15px;font-weight:600;letter-spacing:0;color:var(--night);background:var(--aurora)}
+ol.st li::after{content:"";position:absolute;left:14.5px;top:40px;bottom:6px;width:1px;background:var(--line)}
+ol.st li:last-child::after{display:none}
+ol.st h3{font-size:16.5px;line-height:1.85;letter-spacing:.08em}
+ol.st p{margin-top:6px;font-size:14.5px;line-height:1.95}
 
-/* DM の文 */
-.dmbox{margin-top:26px;background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:18px 18px 14px}
-.dmbox .lab{font-size:13px;color:var(--sub);letter-spacing:.1em}
-.dmbox pre{margin:8px 0 12px;white-space:pre-wrap;font-family:var(--jp);font-size:15px;line-height:1.9;color:var(--fgh)}
-.copy{font:inherit;font-size:14px;letter-spacing:.1em;padding:8px 18px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--fgh);cursor:pointer}
-.copy:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+/* ─ DM の一文と、ボタン ─ */
+.act{margin-top:36px;background:var(--card);border:1px solid var(--cardline);border-radius:18px;padding:22px 16px 18px}
+.act .lab{font-size:13px;color:var(--sub);letter-spacing:.08em}
+.dm-text{margin:10px 0 0;padding:14px;border-radius:10px;background:var(--bg);font-size:14.5px;line-height:1.95;color:var(--fgh);letter-spacing:.03em}
+.dm-text span{display:block}
+.copy{margin-top:12px;font:inherit;font-size:14px;letter-spacing:.08em;line-height:1;padding:12px 18px;border-radius:999px;
+ border:1px solid var(--line);background:transparent;color:var(--fgh);cursor:pointer;min-height:44px}
+.copy[data-done]{border-color:var(--teal)}
+.btns{display:grid;gap:12px;margin-top:22px}
+.btn{display:flex;align-items:center;justify-content:center;gap:12px;min-height:62px;border-radius:999px;text-decoration:none;
+ padding:10px 22px;text-align:left}
+.btn svg{width:24px;height:24px;flex:none}
+.btn .t{display:block;font-size:16px;font-weight:600;letter-spacing:.12em;line-height:1.5}
+.btn .s{display:block;font-size:12px;letter-spacing:.06em;line-height:1.5;opacity:.85}
+.btn.ig{background:var(--ig);color:#fff;box-shadow:0 10px 26px -8px rgba(221,42,123,.55)}
+.btn.dm{color:var(--fgh);border:1.5px solid currentColor}
+.btn:focus-visible,.copy:focus-visible,.mail:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
 
-/* 裏・神威 */
-.ura{margin-top:36px;padding-top:28px;border-top:1px solid var(--line)}
-.ura h3{margin:0 0 12px;font-size:16.5px;font-weight:600;letter-spacing:.1em;color:var(--fgh);line-height:1.8}
-.ura ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
-.ura li{position:relative;padding-left:1.4em;font-size:14.5px;line-height:1.95}
-.ura li::before{content:"";position:absolute;left:.2em;top:.75em;width:7px;height:7px;transform:rotate(45deg);background:var(--aurora)}
-.ura .note{margin-top:10px;font-size:12.5px;color:var(--sub)}
+/* ─ 裏・神威で行っていること ─ */
+ul.ura{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
+ul.ura li{position:relative;padding-left:22px;font-size:14.5px;line-height:1.95}
+ul.ura li::before{content:"";position:absolute;left:3px;top:.8em;width:7px;height:7px;transform:rotate(45deg);background:var(--aurora)}
+.note{margin-top:14px;font-size:12.5px;color:var(--sub);line-height:1.9}
 
-/* お届け */
-.info{padding:44px 0 64px}
-.info dl{margin:0;border-top:1px solid var(--line)}
-.info .row{display:grid;grid-template-columns:7.5em 1fr;gap:10px;padding:14px 2px;border-bottom:1px solid var(--line);font-size:14.5px;line-height:1.9}
-.info dt{color:var(--sub)}
-.info dd{margin:0;color:var(--fgh);min-width:0;overflow-wrap:anywhere}
-.sign{text-align:center;margin-top:40px;font-size:15px;line-height:2.1}
-.sign b{display:block;margin-top:14px;font-weight:600;letter-spacing:.4em;color:var(--fgh)}
+/* ─ お届けについて（見出しの下に中身。狭い幅で欄が割れない） ─ */
+dl.info{margin:28px 0 0;border-top:1px solid var(--line)}
+dl.info div{padding:16px 2px 17px;border-bottom:1px solid var(--line)}
+dl.info dt{font-size:12.5px;color:var(--sub);letter-spacing:.1em;line-height:1.8}
+dl.info dd{margin:4px 0 0;font-size:15px;line-height:1.95;color:var(--fgh)}
+.mail{display:inline-block;margin-top:6px;font-size:14.5px;letter-spacing:.03em;text-underline-offset:4px;text-decoration-thickness:1px;word-break:break-all}
+
+/* ─ 結び ─ */
+.sign{text-align:center;padding:64px 0 calc(72px + env(safe-area-inset-bottom,0px));font-size:15px;line-height:2.15;letter-spacing:.06em}
+.sign .name{margin-top:18px;font-weight:600;letter-spacing:.5em;padding-left:.5em;color:var(--fgh)}
+
+@media (min-width:600px){.hero h1{font-size:28px}.hero .lead{font-size:16px}}
 </style>
 </head>
 <body>
 
 <header class="hero">
   <div class="wrap">
-    <svg class="mark" viewBox="0 0 30 42" aria-hidden="true"><path d="M15 1 L29 21 L15 41 L1 21 Z" fill="none" stroke="#9ff5e0" stroke-width="1.4"/><path d="M15 11 L22 21 L15 31 L8 21 Z" fill="none" stroke="#9ff5e0" stroke-width="1"/></svg>
-    <p class="k">Thank you</p>
-    <h1>天極の書のお申し込み、<br><span class="au">ありがとうございます。</span></h1>
-    <p>あなたのための一冊を、ここから書き始めます。<br>より深く視るために、もう少しだけ、あなたのお話を聞かせてください。</p>
+    <svg class="mark" viewBox="0 0 30 42" aria-hidden="true"><path d="M15 1 L29 21 L15 41 L1 21 Z" fill="none" stroke="#9ff5e0" stroke-width="1.3"/><path d="M15 11 L22 21 L15 31 L8 21 Z" fill="none" stroke="#9ff5e0" stroke-width=".9"/></svg>
+    <h1><span class="l">天極の書の<wbr>お申し込み、</span><br><span class="l au">ありがとう<wbr>ございます。</span></h1>
+    <p class="lead"><span class="l">あなたのための<wbr>一冊を、</span><wbr><span class="l">ここから<wbr>書き始めます。</span></p>
+    <p class="lead"><span class="l">より深く<wbr>視るために、</span><wbr><span class="l">もう少しだけ、</span><wbr><span class="l">あなたの<wbr>お話を</span><wbr><span class="l">聞かせてください。</span></p>
   </div>
 </header>
 
 <main>
-  <section class="steps" aria-labelledby="steps-h">
+  <section class="sec" aria-labelledby="h-next">
     <div class="wrap">
-      <p class="k" style="text-align:center">Next</p>
-      <h2 id="steps-h">このあと、お願いしたいこと</h2>
+      <h2 id="h-next">このあとの流れ</h2>
       <ol class="st">
-        <li><b>裏・神威の Instagram をフォローする</b><span>天極の書をお申し込みの方だけにご案内している、神威のもうひとつのアカウントです。</span></li>
-        <li><b>DM で「天極の書を申し込みました」と送る</b><span>お申し込みのときのお名前を添えてください。どなたからのご連絡か、こちらで確かめます。</span></li>
-        <li><b>神威から、追加の質問を DM でお送りします</b><span>天極の書を書くための質問です。お答えをいただいたら、あなたの一冊に取りかかります。</span></li>
+        <li>
+          <h3>裏・神威を<wbr>フォローする</h3>
+          <p>天極の書を<wbr>お申し込みの方を<wbr>ご招待している、<wbr>神威の<wbr>もうひとつの<wbr><span class="en">Instagram</span>です。</p>
+        </li>
+        <li>
+          <h3>お申し込みを<wbr><span class="en">DM</span>で伝える</h3>
+          <p>下の一文に、<wbr>お申し込みのときの<wbr>お名前を添えて<wbr>送ってください。<wbr>どなたからの<wbr>ご連絡かを、<wbr>こちらで<wbr>確かめます。</p>
+        </li>
+        <li>
+          <h3>神威から届く<wbr>質問に答える</h3>
+          <p>天極の書を<wbr>書くための<wbr>追加の質問を、<wbr><span class="en">DM</span>で<wbr>お送りします。<wbr>お答えを<wbr>いただいてから、<wbr>あなたの一冊に<wbr>取りかかります。</p>
+        </li>
       </ol>
 
-      <div class="cta">
-        <a class="btn ig" href="https://www.instagram.com/ura_kamuy/" target="_blank" rel="noopener noreferrer" id="go-ig">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>
-          裏・神威の Instagram を開く
-        </a>
-        <a class="btn dm" href="https://ig.me/m/ura_kamuy" target="_blank" rel="noopener noreferrer" id="go-dm">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C7 3 3 6.7 3 11.3c0 2.6 1.3 4.9 3.4 6.4V21l3.1-1.7c.8.2 1.6.3 2.5.3 5 0 9-3.7 9-8.3S17 3 12 3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M7.5 13.2l3-3.1 2.2 2 3.8-2.4-3 3.1-2.2-2z" fill="currentColor"/></svg>
-          そのまま DM を送る
-        </a>
-      </div>
-      <p class="small">Instagram のアプリが開きます。アカウント名は <b>ura_kamuy</b> です。</p>
+      <div class="act">
+        <p class="lab">DMの一文（コピーして使えます）</p>
+        <p class="dm-text" id="dmtext"><span>天極の書を申し込みました。</span><span>お申し込みのお名前：</span></p>
+        <button class="copy" type="button" id="copy-btn">この一文をコピー</button>
 
-      <div class="dmbox">
-        <p class="lab">DM の最初の一文（そのまま使えます）</p>
-        <pre id="dmtext">天極の書を申し込みました。
-お申し込みのお名前：</pre>
-        <button class="copy" type="button" id="copy-btn">この文を写す</button>
-      </div>
-
-      <div class="ura">
-        <h3>裏・神威の Instagram で行っていること</h3>
-        <ul>
-          <li>抽選で、神威の鑑定がこの先ずっと通常の50%オフになる「生涯半額」の権利を贈ります</li>
-          <li>あなたの星紋に合わせて神威が選んだパワーストーンを、裏・神威だけの価格でご案内します</li>
-          <li>追加の鑑定を、いつでも通常の30%オフでお受けします</li>
-        </ul>
-        <p class="note">※生涯半額の割引は、合計10万円までです。</p>
+        <div class="btns">
+          <a class="btn ig" href="https://www.instagram.com/ura_kamuy/" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>
+            <span><span class="t">裏・神威を開く</span><span class="s en">Instagram @ura_kamuy</span></span>
+          </a>
+          <a class="btn dm" href="https://ig.me/m/ura_kamuy" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C7 3 3 6.7 3 11.3c0 2.6 1.3 4.9 3.4 6.4V21l3.1-1.7c.8.2 1.6.3 2.5.3 5 0 9-3.7 9-8.3S17 3 12 3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M7.5 13.2l3-3.1 2.2 2 3.8-2.4-3 3.1-2.2-2z" fill="currentColor"/></svg>
+            <span><span class="t"><span class="en">DM</span>を送る</span><span class="s">メッセージが開きます</span></span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="info" aria-labelledby="info-h">
+  <section class="sec" aria-labelledby="h-ura">
     <div class="wrap">
-      <p class="k">Information</p>
-      <h2 id="info-h" style="font-size:19px;margin-bottom:16px">お届けについて</h2>
-      <dl>
-        <div class="row"><dt>お届けするもの</dt><dd>天極の書（あなたのための本鑑定）</dd></div>
-        <div class="row"><dt>お届けまで</dt><dd>お申し込みから7日以内に、鑑定書をお届けします。</dd></div>
-        <div class="row"><dt>質問について</dt><dd>DM の質問へのお答えは、思いつくままの言葉で大丈夫です。書きにくいことは、書かなくてかまいません。</dd></div>
-        <div class="row"><dt>Instagram を<br>お使いでない方</dt><dd>kamuy.reishi24@gmail.com へ、「天極の書を申し込みました」とお名前をお送りください。</dd></div>
-      </dl>
-      <p class="sign">あなたの星が、いちばん奥まで開くように。<br>心を込めて、視させていただきます。<b>神威</b></p>
+      <h2 id="h-ura">裏・神威で<wbr>行っていること</h2>
+      <ul class="ura">
+        <li>抽選で、<wbr>神威の鑑定が<wbr>この先ずっと<wbr>通常の50%オフに<wbr>なる「生涯半額」の<wbr>権利を贈ります</li>
+        <li>あなたの星紋に<wbr>合わせて<wbr>神威が選んだ<wbr>パワーストーンを、<wbr>裏・神威だけの<wbr>価格で<wbr>ご案内します</li>
+        <li>追加の鑑定を、<wbr>いつでも<wbr>通常の30%オフで<wbr>お受けします</li>
+      </ul>
+      <p class="note">※生涯半額の割引は、<wbr>合計10万円までです。</p>
     </div>
   </section>
+
+  <section class="sec" aria-labelledby="h-info">
+    <div class="wrap">
+      <h2 id="h-info">お届けについて</h2>
+      <dl class="info">
+        <div><dt>お届けするもの</dt><dd>天極の書<wbr>（あなたのための<wbr>本鑑定）</dd></div>
+        <div><dt>お届けの目安</dt><dd>お申し込みから<wbr>7日以内に、<wbr>鑑定書を<wbr>お届けします。</dd></div>
+        <div><dt>質問へのお答え</dt><dd>思いつくままの<wbr>言葉で<wbr>大丈夫です。<wbr>書きにくいことは、<wbr>書かなくて<wbr>かまいません。</dd></div>
+        <div><dt><span class="en">Instagram</span>をお使いでない方</dt><dd>「天極の書を<wbr>申し込みました」と<wbr>お名前を、<wbr>メールで<wbr>お送りください。<br><a class="mail en" href="mailto:kamuy.reishi24@gmail.com?subject=%E5%A4%A9%E6%A5%B5%E3%81%AE%E6%9B%B8%E3%82%92%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF%E3%81%BE%E3%81%97%E3%81%9F">kamuy.reishi24@gmail.com</a></dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="sign"><p><span class="l">あなたの星が、</span><wbr><span class="l">いちばん奥まで<wbr>開くように。</span><br><span class="l">心を込めて、</span><wbr><span class="l">視させていただきます。</span></p><p class="name">神威</p></div>
 </main>
 
 <script>
 (function () {
   var btn = document.getElementById('copy-btn');
-  var pre = document.getElementById('dmtext');
+  var box = document.getElementById('dmtext');
+  var label = btn.textContent;
   btn.addEventListener('click', function () {
-    var text = pre.textContent;
-    var done = function () { btn.textContent = '写しました'; setTimeout(function () { btn.textContent = 'この文を写す'; }, 2000); };
+    var text = Array.prototype.map.call(box.children, function (s) { return s.textContent; }).join('\n');
+    var done = function () {
+      btn.textContent = 'コピーしました'; btn.setAttribute('data-done', '');
+      setTimeout(function () { btn.textContent = label; btn.removeAttribute('data-done'); }, 2200);
+    };
     var fallback = function () {
-      var r = document.createRange(); r.selectNodeContents(pre);
-      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
-      btn.textContent = '選んだ文を長押しで写してください';
+      var r = document.createRange(); r.selectNodeContents(box);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      btn.textContent = '選んだ文を長押しでコピー';
     };
     try {
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback);
