@@ -17,23 +17,64 @@ iframe{position:fixed;inset:0;width:100%;height:100%;border:0;display:block}
 .wait i{display:block;width:28px;height:28px;margin:0 auto 18px;border:1px solid #6b6253;border-top-color:#ddd3c0;border-radius:50%;animation:r 1.4s linear infinite}
 @keyframes r{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.wait i{animation:none}}
+/* 2026-10-15 運用者「5分以上画面が黒いままの方がいらっしゃいます」: 映らないときに、待たせ続けずに直接ひらく道を出す */
+.alt{display:none;margin-top:26px}
+.alt.on{display:block}
+.alt p{font-size:13px;color:#a89f8f;margin:0 0 14px}
+.btn{display:block;box-sizing:border-box;width:100%;max-width:300px;margin:0 auto 12px;padding:13px 16px;border:1px solid #b9a77f;border-radius:2px;background:#ddd3c0;color:#1a1611;font:inherit;font-size:15px;letter-spacing:.08em;text-decoration:none;cursor:pointer}
+.btn.sub{background:transparent;color:#ddd3c0;border-color:#6b6253}
+.btn:focus-visible,.bar a:focus-visible,.bar button:focus-visible{outline:2px solid #f0e6cf;outline-offset:3px}
+/* 読み込みが終わったのに中が映らないとき（知らせが来ないとき）だけ、下に小さく出す。× で閉じられる */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:none;align-items:center;gap:10px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(10,9,7,.92);border-top:1px solid #3a342b;color:#ddd3c0;font-family:"Hiragino Mincho ProN","Yu Mincho",serif;font-size:13px;letter-spacing:.04em}
+.bar.on{display:flex}
+.bar span{flex:1;min-width:0}
+.bar a{flex:none;padding:8px 12px;border:1px solid #b9a77f;color:#ddd3c0;text-decoration:none}
+.bar button{flex:none;width:36px;height:36px;border:0;background:transparent;color:#a89f8f;font-size:20px;line-height:1;cursor:pointer}
 </style>
 </head>
 <body>
-<div class="wait" id="w"><div><i></i><p>鑑定書を読み込んでいます。</p><p class="s">少し時間がかかります。<br>画面が黒いままでも、閉じずに数分お待ちください。</p></div></div>
+<div class="wait" id="w"><div><i></i><p>鑑定書を読み込んでいます。</p><p class="s">少し時間がかかります。<br>このままお待ちください。</p>
+<div class="alt" id="alt"><p>なかなか表示されないときは、<br>こちらから直接ひらけます。</p><a class="btn" id="open1" href="#" target="_top" rel="noreferrer">鑑定書を直接ひらく</a><button class="btn sub" id="again" type="button">もう一度読み込む</button></div></div></div>
 <iframe id="k" title="神威の鑑定"></iframe>
+<div class="bar" id="bar" role="status"><span>表示されないときは</span><a id="open2" href="#" target="_top" rel="noreferrer">直接ひらく</a><button id="close" type="button" aria-label="閉じる">×</button></div>
 <script>
 /* ここだけ書き換える（運用者）：公開プロジェクトの「ウェブアプリの URL」（…/exec で終わる） */
 var EXEC_URL = 'https://script.google.com/macros/s/AKfycbwAtP1MejehTJdtSJIwC6q7RdJ4O1s4fNvC5ZKPvXFbTlwKZQcxDHXlDA5npRjRjWEmIw/exec';
+/* 読み込みが終わらないとき、直接ひらく道を出すまでの秒数。読み込みが終わっても中から「映った」が来ないとき、下に出すまでの秒数 */
+var ALT_AFTER_MS = 12000, BAR_AFTER_MS = 6000;
 (function () {
   var t = new URLSearchParams(location.search).get('t') || '';
   /* 合言葉は 32 字以上の 0-9a-f だけを通す（公開プロジェクトの PUB_TOKEN_RE_ と同じ） */
   if (!/^[0-9a-f]{32,}$/.test(t)) { document.body.innerHTML = '<p style="color:#ddd3c0;font:15px serif;text-align:center;margin-top:40vh">メールのリンクから開いてください。</p>'; return; }
-  var k = document.getElementById('k');
-  /* 読み込みの間は、後ろの案内が見えるように iframe を透かしておく */
-  k.style.opacity = '0';
-  k.addEventListener('load', function () { setTimeout(function () { k.style.opacity = '1'; var w = document.getElementById('w'); if (w) w.style.display = 'none'; }, 800); });
-  k.src = EXEC_URL + '?t=' + encodeURIComponent(t);
+  var k = document.getElementById('k'), w = document.getElementById('w'), alt = document.getElementById('alt'), bar = document.getElementById('bar');
+  var direct = EXEC_URL + '?t=' + encodeURIComponent(t);
+  document.getElementById('open1').href = direct;
+  document.getElementById('open2').href = direct;
+  var ready = false, altTimer = 0, barTimer = 0, showTimer = 0, closed = false;
+  function show() { k.style.opacity = '1'; w.style.display = 'none'; }
+  /* 公開ページは中身が読み終わると "kamuy-ready" だけを知らせてくる（Google の配信元からのものだけ受ける） */
+  window.addEventListener('message', function (e) {
+    if (e.data !== 'kamuy-ready' || !/^https:\/\/([a-z0-9-]+\.)*(googleusercontent|google)\.com$/.test(e.origin)) return;
+    ready = true; clearTimeout(altTimer); clearTimeout(barTimer); clearTimeout(showTimer); bar.classList.remove('on'); show();
+  });
+  function start() {
+    ready = false; closed = false;
+    w.style.display = ''; alt.classList.remove('on'); bar.classList.remove('on');
+    /* 読み込みの間は、後ろの案内が見えるように iframe を透かしておく */
+    k.style.opacity = '0';
+    clearTimeout(altTimer); clearTimeout(barTimer); clearTimeout(showTimer);
+    altTimer = setTimeout(function () { if (!ready) alt.classList.add('on'); }, ALT_AFTER_MS);
+  }
+  k.addEventListener('load', function () {
+    if (!k.getAttribute('src')) return;
+    clearTimeout(altTimer);
+    showTimer = setTimeout(function () { if (!ready) show(); }, 800);
+    barTimer = setTimeout(function () { if (!ready && !closed) bar.classList.add('on'); }, BAR_AFTER_MS);
+  });
+  document.getElementById('again').addEventListener('click', function () { start(); k.src = direct + '&r=' + Date.now(); });
+  document.getElementById('close').addEventListener('click', function () { closed = true; bar.classList.remove('on'); });
+  start();
+  k.src = direct;
 })();
 </script>
 </body>
