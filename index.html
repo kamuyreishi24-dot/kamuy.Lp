@@ -99,10 +99,14 @@ section{padding:84px 0}
 .fields{display:grid;gap:18px;margin:26px 0 8px}
 .f label,.f .lb{display:block;font-size:14px;color:var(--frost);letter-spacing:.16em;margin-bottom:7px}
 .f .hp{font-size:12.5px;color:#8a9bb0;line-height:1.8;margin-top:6px;letter-spacing:.04em}
-input[type=text],input[type=email],input[type=date],textarea{width:100%;font:inherit;font-size:16px;letter-spacing:.04em;color:var(--frost);background:rgba(232,240,246,.06);border:1px solid rgba(232,240,246,.22);border-radius:10px;padding:13px 14px;line-height:1.6;-webkit-appearance:none;appearance:none;min-height:52px}
-input[type=date]{color-scheme:dark}
+input[type=text],input[type=email],input[type=date],input[type=time],select,textarea{width:100%;font:inherit;font-size:16px;letter-spacing:.04em;color:var(--frost);background:rgba(232,240,246,.06);border:1px solid rgba(232,240,246,.22);border-radius:10px;padding:13px 14px;line-height:1.6;-webkit-appearance:none;appearance:none;min-height:52px}
+input[type=date],input[type=time]{color-scheme:dark}
+select{color-scheme:dark;padding-right:34px;background-image:linear-gradient(45deg,transparent 50%,#8a9bb0 50%),linear-gradient(135deg,#8a9bb0 50%,transparent 50%);background-position:calc(100% - 18px) 50%,calc(100% - 13px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+select:invalid,select option[value=""]{color:#8a9bb0}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.f label small,.f .lb small{font-size:12px;color:#8a9bb0;letter-spacing:.06em;margin-left:6px}
 textarea{min-height:132px;resize:vertical}
-input:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(95,224,196,.18)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(95,224,196,.18)}
 @keyframes st{to{opacity:1}}
 @media (prefers-reduced-motion:reduce){.hero h1 span,.hero .by,.hero .yomi,.hero .l1,.hero .btn,.btn{animation:none;opacity:1;transform:none;filter:none}.pole{animation:none}}
 
@@ -169,6 +173,14 @@ details p{font-size:14.5px;padding:0 0 14px;line-height:1.95}
    <div class="f">
     <label for="Birthday">生年月日</label>
     <input type="date" id="Birthday" name="birthday" required min="1920-01-01" max="2015-12-31" value="">
+   </div>
+   <div class="f">
+    <p class="lb" id="btl">生まれた時間と場所<small>分かれば</small></p>
+    <div class="pair" role="group" aria-labelledby="btl">
+     <input type="time" id="BirthTime" name="birth_time" aria-label="生まれた時間">
+     <select id="BirthPlace" name="birth_place" aria-label="生まれた場所"><option value="">都道府県</option><option value="北海道">北海道</option><option value="青森県">青森県</option><option value="岩手県">岩手県</option><option value="宮城県">宮城県</option><option value="秋田県">秋田県</option><option value="山形県">山形県</option><option value="福島県">福島県</option><option value="茨城県">茨城県</option><option value="栃木県">栃木県</option><option value="群馬県">群馬県</option><option value="埼玉県">埼玉県</option><option value="千葉県">千葉県</option><option value="東京都">東京都</option><option value="神奈川県">神奈川県</option><option value="新潟県">新潟県</option><option value="富山県">富山県</option><option value="石川県">石川県</option><option value="福井県">福井県</option><option value="山梨県">山梨県</option><option value="長野県">長野県</option><option value="岐阜県">岐阜県</option><option value="静岡県">静岡県</option><option value="愛知県">愛知県</option><option value="三重県">三重県</option><option value="滋賀県">滋賀県</option><option value="京都府">京都府</option><option value="大阪府">大阪府</option><option value="兵庫県">兵庫県</option><option value="奈良県">奈良県</option><option value="和歌山県">和歌山県</option><option value="鳥取県">鳥取県</option><option value="島根県">島根県</option><option value="岡山県">岡山県</option><option value="広島県">広島県</option><option value="山口県">山口県</option><option value="徳島県">徳島県</option><option value="香川県">香川県</option><option value="愛媛県">愛媛県</option><option value="高知県">高知県</option><option value="福岡県">福岡県</option><option value="佐賀県">佐賀県</option><option value="長崎県">長崎県</option><option value="熊本県">熊本県</option><option value="大分県">大分県</option><option value="宮崎県">宮崎県</option><option value="鹿児島県">鹿児島県</option><option value="沖縄県">沖縄県</option><option value="海外">海外</option></select>
+    </div>
+    <p class="hp">分かると、生まれた時の星の位置まで細かく読めます。母子手帳に書いてあります。空いたままでも鑑定できます。</p>
    </div>
    <div class="f">
     <label for="Worry">いま、気になっていること</label>
@@ -271,7 +283,7 @@ function sky(cv, px, py, n, k) {
     $('sb').disabled = true; $('sb').textContent = '送っています…';
     var topicEl = document.querySelector('input[name="topic"]:checked');
     var data = { v: 1, sid: $('sid').value, name: $('Name').value.trim(), birthday: ymdOf($('Birthday').value), topic: topicEl ? topicEl.value : '人生全般',
-      worry: $('Worry').value.trim(), email: $('Email').value.trim(), optin: $('optv').value, adult: $('adult').checked, hp: document.querySelector('input[name="botcheck"]').checked ? '1' : '', ms: Date.now() - T0 };
+      worry: $('Worry').value.trim(), email: $('Email').value.trim(), birth_time: $('BirthTime').value || '', birth_place: $('BirthPlace').value || '', optin: $('optv').value, adult: $('adult').checked, hp: document.querySelector('input[name="botcheck"]').checked ? '1' : '', ms: Date.now() - T0 };
     /* 神威の受け口へ直接（text/plain の JSON＝事前確認の無い送信）。ok にならなければ予備の Web3Forms へ同じ sid で */
     direct(data).then(function (d) {
       if (d && d.ok) { location.href = CONFIG.THANKS_URL; return; }
